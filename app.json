@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "pickly",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -16,7 +16,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ww8007.pickly"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,6 +28,13 @@
     "web": {
       "bundler": "metro",
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2ff1c8d5-ce1d-47d7-86d7-ebe5d015089a"
+      }
+    },
+    "plugins": ["expo-apple-authentication"],
+    "owner": "ww8007"
   }
 }
