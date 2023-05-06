@@ -6,7 +6,7 @@ const logo = `
 `;
 
 const GoggleLogo = () => {
-	const LogoSvg = () => <SvgXml xml={logo} width={40} height={40} />;
+	const LogoSvg = () => <SvgXml xml={logo} width={23} height={23} />;
 	return <LogoSvg />;
 };
 
