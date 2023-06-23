@@ -3,9 +3,12 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from '@react-navigation/native';
-import { SplashScreen, Stack } from 'expo-router';
+import { SplashScreen, Stack, useRouter } from 'expo-router';
 import { useColorScheme } from 'react-native';
 import useSettingFont from '../common/hooks/useSettingFont';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useEffect } from 'react';
+import { startApp } from '../firebaseConfig';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -30,13 +33,27 @@ export const unstable_settings = {
 };
 
 function RootLayoutNav() {
+  useEffect(() => {
+    startApp;
+  }, []);
   const colorScheme = useColorScheme();
+
+  const auth = getAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) router.push('');
+      else router.push('login');
+    });
+  }, [auth.currentUser]);
 
   return (
     <>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
+        <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="login" options={{ headerShown: false }} />
         </Stack>
       </ThemeProvider>
     </>
