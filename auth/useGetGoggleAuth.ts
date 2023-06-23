@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 const useGetGoogleAuth = () => {
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     clientId: process.env.GOOGLE_CLIENT_ID,
+    expoClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
   });
   const auth = getAuth();
 
