@@ -15,7 +15,8 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ww8007.pickly"
+      "bundleIdentifier": "com.ww8007.pickly",
+      "buildNumber": "3"
     },
     "android": {
       "adaptiveIcon": {
