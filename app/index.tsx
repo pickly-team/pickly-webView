@@ -8,7 +8,7 @@ export default function App() {
     <SafeAreaView style={styles.safeArea}>
       <WebView
         style={styles.container}
-        source={{ uri: 'http://localhost:3000/' }}
+        source={{ uri: 'https://app.pickly.today' }}
       />
     </SafeAreaView>
   );
