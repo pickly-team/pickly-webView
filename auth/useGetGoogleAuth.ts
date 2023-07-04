@@ -1,22 +1,21 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
-
+import Constants from 'expo-constants';
 import {
   getAuth,
   GoogleAuthProvider,
   signInWithCredential,
   onAuthStateChanged,
 } from 'firebase/auth';
+import { useEffect } from 'react';
 
 WebBrowser.maybeCompleteAuthSession();
 
-import { useEffect } from 'react';
-
 const useGetGoogleAuth = () => {
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
-    expoClientId: process.env.EXPO_CLIENT_ID || '',
-    iosClientId: process.env.IOS_CLIENT_ID || '',
-    androidClientId: process.env.ANDROID_CLIENT_ID || '',
+    expoClientId: Constants.expoConfig?.extra?.expoClientId || '',
+    iosClientId: Constants.expoConfig?.extra?.iosClientId || '',
+    androidClientId: Constants.expoConfig?.extra?.androidClientId || '',
   });
   const auth = getAuth();
 
