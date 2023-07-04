@@ -2403,6 +2403,14 @@
   resolved "https://registry.yarnpkg.com/@react-native/polyfills/-/polyfills-2.0.0.tgz#4c40b74655c83982c8cf47530ee7dc13d957b6aa"
   integrity sha512-K0aGNn1TjalKj+65D7ycc1//H9roAQ51GJVk5ZJQFb2teECGmzd86bYDC0aYdbRf7gtovescq4Zt6FR0tgXiHQ==
 
+"@react-native/virtualized-lists@^0.72.4":
+  version "0.72.5"
+  resolved "https://registry.yarnpkg.com/@react-native/virtualized-lists/-/virtualized-lists-0.72.5.tgz#a7b261357ec7e0e5aa97a24d4acab1d903811e09"
+  integrity sha512-AtKE3dez3lf89O87wC2ZglV5aPsifopQgn/UmFhXAwi18Yp1BJfEGh3sUqOPNgZNByYPAGxFANeZq44VATXeJA==
+  dependencies:
+    invariant "^2.2.4"
+    nullthrows "^1.1.1"
+
 "@react-navigation/bottom-tabs@~6.5.7":
   version "6.5.7"
   resolved "https://registry.yarnpkg.com/@react-navigation/bottom-tabs/-/bottom-tabs-6.5.7.tgz#08470c96e0d11481422214bb98f0ff034038856c"
@@ -2595,6 +2603,23 @@
   version "6.9.7"
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.7.tgz#63bb7d067db107cc1e457c303bc25d511febf6cb"
   integrity sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==
+
+"@types/react-native@^0.72.2":
+  version "0.72.2"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.72.2.tgz#27c931a899c555b28e20cdd12e570b017808de96"
+  integrity sha512-/eEjr04Zqo7mTMszuSdrLx90+j5nWhDMMOgtnKZfAYyV3RwmlpSb7F17ilmMMxZWJY81n/JZ4e6wdhMJFpjrCg==
+  dependencies:
+    "@react-native/virtualized-lists" "^0.72.4"
+    "@types/react" "*"
+
+"@types/react@*":
+  version "18.2.14"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.14.tgz#fa7a6fecf1ce35ca94e74874f70c56ce88f7a127"
+  integrity sha512-A0zjq+QN/O0Kpe30hA1GidzyFjatVvrpIvWLxD+xv67Vt91TWWgco9IvrJBkeyHm1trGaFS/FSGqPlhyeZRm0g==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
 
 "@types/react@~18.0.14":
   version "18.0.38"
@@ -4016,6 +4041,11 @@ domutils@^3.0.1:
     dom-serializer "^2.0.0"
     domelementtype "^2.3.0"
     domhandler "^5.0.3"
+
+dotenv@^16.3.1:
+  version "16.3.1"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.3.1.tgz#369034de7d7e5b120972693352a3bf112172cc3e"
+  integrity sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==
 
 ee-first@1.1.1:
   version "1.1.1"
