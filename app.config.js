@@ -18,7 +18,7 @@ export default {
     ios: {
       supportsTablet: true,
       bundleIdentifier: 'com.ww8007.pickly',
-      buildNumber: '4',
+      buildNumber: '5',
     },
     android: {
       adaptiveIcon: {
