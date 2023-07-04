@@ -4,7 +4,7 @@ import { View } from '../components/Themed';
 import Button from '../ui/Button';
 import Colors from '../constants/Colors';
 import { Text } from '../ui/Text';
-import useGetGoogleAuth from '../auth/useGetGoggleAuth';
+import useGetGoogleAuth from '../auth/useGetGoogleAuth';
 import { useEffect, useState } from 'react';
 import useGetAppleAuth from '../auth/useGetAppleAuth';
 import * as AppleAuthentication from 'expo-apple-authentication';
