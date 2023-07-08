@@ -2,8 +2,10 @@ import * as React from 'react';
 import { WebView } from 'react-native-webview';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import Colors from '../constants/Colors';
+import useNotification from '../common/hooks/useNotification';
 
 export default function App() {
+  const { expoPushToken, notification } = useNotification();
   return (
     <SafeAreaView style={styles.safeArea}>
       <WebView
