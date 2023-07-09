@@ -9,6 +9,7 @@ import useSettingFont from '../common/hooks/useSettingFont';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useEffect } from 'react';
 import { startApp } from '../firebaseConfig';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -48,8 +49,10 @@ function RootLayoutNav() {
     });
   }, [auth.currentUser]);
 
+  const queryClient = new QueryClient();
+
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="index" options={{ headerShown: false }} />
@@ -57,5 +60,6 @@ function RootLayoutNav() {
         </Stack>
       </ThemeProvider>
     </>
+    </QueryClientProvider>
   );
 }
