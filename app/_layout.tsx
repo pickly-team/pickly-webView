@@ -39,9 +39,6 @@ export const unstable_settings = {
 };
 
 function RootLayoutNav() {
-  useEffect(() => {
-    startApp;
-  }, []);
   const colorScheme = useColorScheme();
 
   const auth = getAuth();
