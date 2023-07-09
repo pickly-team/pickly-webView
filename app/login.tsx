@@ -15,8 +15,6 @@ export default function ModalScreen() {
   const { promptAsync: googleLogin } = useGetGoogleAuth();
   const { signInWithApple } = useGetAppleAuth();
 
-  const router = useRouter();
-
   const [appState, setAppState] = useState(AppState.currentState);
 
   useEffect(() => {
