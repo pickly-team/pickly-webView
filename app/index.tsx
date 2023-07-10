@@ -2,11 +2,11 @@ import { WebView } from 'react-native-webview';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import Colors from '../constants/Colors';
 import useNotification from '../common/hooks/useNotification';
-import useAuthContext from '../auth/useAuthContext';
 import { useGetMemberId, useUserSignIn } from '../auth/api/login';
 import { useEffect, useRef } from 'react';
 import { webviewBridge } from '../common/util/webviewBridge';
 import { SplashScreen } from 'expo-router';
+import useAuthContext from '../auth/useAuthContext';
 
 export default function App() {
   const { expoPushToken, notification } = useNotification();
