@@ -3,13 +3,14 @@ import { SafeAreaView, StyleSheet } from 'react-native';
 import Colors from '../constants/Colors';
 import useNotification from '../common/hooks/useNotification';
 import { useGetMemberId, useUserSignIn } from '../auth/api/login';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { webviewBridge } from '../common/util/webviewBridge';
 import { SplashScreen } from 'expo-router';
 import useAuthContext from '../auth/useAuthContext';
+import Loading from '../common/ui/Loading';
 
 export default function App() {
-  const { expoPushToken, notification } = useNotification();
+  // const { expoPushToken, notification } = useNotification();
   // FIRST RENDER
   const { user } = useAuthContext();
 
@@ -31,29 +32,38 @@ export default function App() {
     userSignIn({ token: user.token });
   }, [user, serverMemberId, isGetMemberIdLoading]);
 
+  const [loading, setLoading] = useState(true);
+
   // 2. 웹뷰 로그인
   const webviewRef = useRef<WebView>(null);
   useEffect(() => {
     if (!user?.token) return;
     const memberId = signInData?.memberId || serverMemberId;
     if (memberId) {
-      webviewBridge(webviewRef, 'login', {
-        token: user?.token,
-        memberId: memberId,
-      })();
+      setTimeout(() => {
+        webviewBridge(webviewRef, 'login', {
+          token: user?.token,
+          memberId: memberId,
+        })();
+      }, 1000);
     }
   }, [serverMemberId, signInData, user?.token]);
 
   if (isGetMemberIdLoading || isUserSignInLoading) return <SplashScreen />;
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <WebView
-        ref={webviewRef}
-        style={styles.container}
-        source={{ uri: 'https://app.pickly.today' }}
-      />
-    </SafeAreaView>
+    <>
+      {loading && <Loading />}
+      <SafeAreaView style={styles.safeArea}>
+        <WebView
+          onLoadStart={() => setLoading(true)}
+          onLoadEnd={() => setLoading(false)}
+          ref={webviewRef}
+          style={[styles.container, { opacity: loading ? 0 : 1 }]}
+          source={{ uri: 'https://app.pickly.today' }}
+        />
+      </SafeAreaView>
+    </>
   );
 }
 
@@ -64,5 +74,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    backgroundColor: Colors.dark.background,
   },
 });
