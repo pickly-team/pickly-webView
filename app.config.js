@@ -21,7 +21,7 @@ export default {
     ios: {
       supportsTablet: true,
       bundleIdentifier: 'com.ww8007.pickly',
-      buildNumber: '6',
+      buildNumber: '7',
       infoPlist: {
         UIBackgroundModes: ['remote-notification'],
       },
