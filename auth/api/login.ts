@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import Constants from 'expo-constants';
+import client from '../../lib/client';
 export interface Json {
   email: string;
   isHardMode: boolean;
@@ -15,7 +15,7 @@ interface RequestInterface {
 }
 
 const loginAPI = async ({ token }: RequestInterface) => {
-  const { data } = await axios<Json>({
+  const { data } = await client<Json>({
     method: 'post',
     url: `${
       Constants.expoConfig?.extra?.serverEndpoint || ''
@@ -36,7 +36,7 @@ interface RequestInterface {
 }
 
 const getMemberIdAPI = async ({ token }: RequestInterface) => {
-  const { data } = await axios<MemberId>({
+  const { data } = await client<MemberId>({
     method: 'get',
     url: `${Constants.expoConfig?.extra?.serverEndpoint || ''}/members/id`,
     headers: token ? { Authorization: `Bearer ${token}` } : {},
