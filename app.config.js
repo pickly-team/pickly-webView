@@ -19,10 +19,10 @@ export default {
       icon: './assets/images/notification-icon.png',
     },
     ios: {
-      googleServicesFile: './GoogleService-Info.plist',
+      googleServicesFile: './ios/GoogleService-Info.plist',
       supportsTablet: true,
       bundleIdentifier: 'com.ww8007.pickly',
-      buildNumber: '7',
+      buildNumber: '10',
       infoPlist: {
         UIBackgroundModes: ['remote-notification'],
       },
