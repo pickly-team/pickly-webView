@@ -1,58 +1,33 @@
-import * as AppleAuthentication from 'expo-apple-authentication';
-import {
-  getAuth,
-  signInWithCredential,
-  OAuthProvider,
-  onAuthStateChanged,
-  OAuthCredential,
-} from 'firebase/auth';
+import appleAuth from '@invertase/react-native-apple-authentication';
 import { useEffect } from 'react';
+import auth from '@react-native-firebase/auth';
 
 const useGetAppleAuth = () => {
-  const auth = getAuth();
-
   const signInWithApple = async () => {
-    try {
-      const result = await AppleAuthentication.signInAsync({
-        requestedScopes: [
-          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-          AppleAuthentication.AppleAuthenticationScope.EMAIL,
-        ],
-      });
+    // Start the sign-in request
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+    });
 
-      if (result) {
-        const { identityToken } = result;
-        const provider = new OAuthProvider('apple.com');
-        provider.addScope('email');
-        provider.addScope('name');
-        provider.setCustomParameters({
-          locale: 'ko',
-        });
-        const credential = OAuthCredential.fromJSON({
-          providerId: 'apple.com',
-          signInMethod: 'oauth',
-          idToken: identityToken,
-        });
-
-        if (credential) {
-          signInWithCredential(auth, credential)
-            .then(() => {
-              console.log('Apple sign in success');
-            })
-            .catch((error) => {
-              console.log('Error:', error);
-            });
-        } else {
-          console.log('Failed to create credential for Apple sign in');
-        }
-      }
-    } catch (error) {
-      console.log('Error:', error);
+    // Ensure Apple returned a user identityToken
+    if (!appleAuthRequestResponse.identityToken) {
+      throw new Error('Apple Sign-In failed - no identify token returned');
     }
+
+    // Create a Firebase credential from the response
+    const { identityToken, nonce } = appleAuthRequestResponse;
+    const appleCredential = auth.AppleAuthProvider.credential(
+      identityToken,
+      nonce,
+    );
+
+    // Sign the user in with the credential
+    return auth().signInWithCredential(appleCredential);
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = auth().onAuthStateChanged(async (user) => {
       if (user) {
         const { uid, email, displayName } = user;
         console.log('uid:', uid);
