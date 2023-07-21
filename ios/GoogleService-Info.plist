@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>425892645876-tm1fbt62bqajldeper8qsqqod74qti26.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.425892645876-tm1fbt62bqajldeper8qsqqod74qti26</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>425892645876-o20kset5rrimdgrvbshc8eldl46p344h.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC3YapaH80HZ1dsUGlWO5MxW9HOeBnutRQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>425892645876</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ww8007.pickly</string>
+	<key>PROJECT_ID</key>
+	<string>pickly-bb15d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pickly-bb15d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:425892645876:ios:1b6974fda4a620c0fac7a1</string>
+</dict>
+</plist>
