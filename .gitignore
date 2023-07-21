@@ -22,3 +22,11 @@ web-build/
 
 # vscode
 .vscode/
+
+# Firebase Files
+/google-services.json
+/GoogleService-Info.plist
+
+# Firebase Files in iOS and Android directories
+/ios/GoogleService-Info.plist
+/android/app/google-services.json
