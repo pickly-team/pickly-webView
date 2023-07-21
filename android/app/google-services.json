@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "425892645876",
+    "project_id": "pickly-bb15d",
+    "storage_bucket": "pickly-bb15d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:425892645876:android:340b3bbee3276f69fac7a1",
+        "android_client_info": {
+          "package_name": "com.ww8007.pickly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "425892645876-skqbnqdo0lt3un48svvd9mns2ujlkfjn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFUj6UiEol_sJY5sKgr8Vstr-rrxTgM3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "425892645876-9t55u8lebjgav8j0qrq7gqm1d28k5tbg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "425892645876-tm1fbt62bqajldeper8qsqqod74qti26.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ww8007.pickly"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
