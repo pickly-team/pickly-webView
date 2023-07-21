@@ -6,9 +6,8 @@ import {
 import { SplashScreen, Stack, useRouter } from 'expo-router';
 import { useColorScheme } from 'react-native';
 import useSettingFont from '../common/hooks/useSettingFont';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import auth from '@react-native-firebase/auth';
 import { useEffect } from 'react';
-import { startApp } from '../firebaseConfig';
 import { AuthProvider } from '../auth/AuthContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -19,10 +18,6 @@ export {
 
 export default function RootLayout() {
   const { loaded } = useSettingFont();
-
-  useEffect(() => {
-    startApp;
-  }, []);
 
   return (
     <>
@@ -41,15 +36,14 @@ export const unstable_settings = {
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
-  const auth = getAuth();
   const router = useRouter();
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) router.push('');
+    auth().onAuthStateChanged((user) => {
+      if (user) router.push('login');
       else router.push('login');
     });
-  }, [auth.currentUser]);
+  }, [auth]);
 
   const queryClient = new QueryClient();
 

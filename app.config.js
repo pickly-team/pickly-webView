@@ -19,6 +19,7 @@ export default {
       icon: './assets/images/notification-icon.png',
     },
     ios: {
+      googleServicesFile: './GoogleService-Info.plist',
       supportsTablet: true,
       bundleIdentifier: 'com.ww8007.pickly',
       buildNumber: '7',
@@ -27,6 +28,7 @@ export default {
       },
     },
     android: {
+      googleServicesFile: './google-services.json',
       package: 'com.ww8007.pickly',
       adaptiveIcon: {
         foregroundImage: './assets/images/adaptive-icon.png',
@@ -53,7 +55,10 @@ export default {
       androidClientId: process.env.ANDROID_CLIENT_ID,
       serverEndpoint: process.env.SERVER_ENDPOINT,
     },
-    plugins: ['expo-apple-authentication'],
+    plugins: [
+      '@react-native-firebase/app',
+      '@react-native-google-signin/google-signin',
+    ],
     owner: 'ww8007',
   },
 };
