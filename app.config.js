@@ -27,6 +27,7 @@ export default {
       },
     },
     android: {
+      package: 'com.ww8007.pickly',
       adaptiveIcon: {
         foregroundImage: './assets/images/adaptive-icon.png',
         backgroundColor: '#ffffff',
