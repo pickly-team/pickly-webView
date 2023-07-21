@@ -1,4 +1,3 @@
-import { getAuth } from 'firebase/auth';
 import {
   createContext,
   useEffect,
@@ -6,6 +5,7 @@ import {
   useCallback,
   useMemo,
 } from 'react';
+import auth from '@react-native-firebase/auth';
 
 export type ActionMapType<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
@@ -76,11 +76,9 @@ type AuthProviderProps = {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const auth = getAuth();
-
   const initialize = useCallback(async () => {
     try {
-      auth.onAuthStateChanged(async (user) => {
+      auth().onAuthStateChanged(async (user) => {
         dispatch({
           type: Types.INITIAL,
           payload: {
@@ -103,19 +101,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, [auth]);
 
-  useEffect(() => {
-    auth.onAuthStateChanged(() => {
-      initialize();
-    });
-  }, [initialize]);
-
   // LOGOUT
   const logout = useCallback(() => {
-    auth.signOut();
+    auth().signOut();
     dispatch({
       type: Types.LOGOUT,
     });
   }, []);
+
+  // INITIALIZE
+  useEffect(() => {
+    auth().onAuthStateChanged(async () => {
+      initialize();
+    });
+  }, [initialize]);
 
   const memoizedValue = useMemo(
     () => ({
