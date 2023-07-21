@@ -6,13 +6,13 @@ import Colors from '../constants/Colors';
 import { Text } from '../ui/Text';
 import useGetGoogleAuth from '../auth/useGetGoogleAuth';
 import { useEffect, useState } from 'react';
-import useGetAppleAuth from '../auth/useGetAppleAuth';
-import * as AppleAuthentication from 'expo-apple-authentication';
 import GoggleLogo from '../ui/GoggleLogo';
+import { AppleButton } from '@invertase/react-native-apple-authentication';
+import useGetAppleAuth from '../auth/useGetAppleAuth';
 import { useRouter } from 'expo-router';
 
 export default function ModalScreen() {
-  const { promptAsync: googleLogin } = useGetGoogleAuth();
+  const { onClickGoogleLogin } = useGetGoogleAuth();
   const { signInWithApple } = useGetAppleAuth();
 
   const [appState, setAppState] = useState(AppState.currentState);
@@ -21,9 +21,11 @@ export default function ModalScreen() {
     AppState.addEventListener('change', handleAppStateChange);
   }, []);
 
+  const router = useRouter();
+
   const handleAppStateChange = (nextAppState: AppStateStatus) => {
     if (appState.match(/inactive|background/) && nextAppState === 'active') {
-      // router.push('(webview)');
+      router.replace('');
     }
     setAppState(nextAppState);
   };
@@ -36,20 +38,21 @@ export default function ModalScreen() {
 
       {/* <Text style={styles.title}>Modal</Text> */}
       <View style={styles.buttonWrapper}>
-        <AppleAuthentication.AppleAuthenticationButton
-          buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-          buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.WHITE}
-          cornerRadius={5}
+        <AppleButton
+          buttonStyle={AppleButton.Style.WHITE}
+          buttonType={AppleButton.Type.SIGN_IN}
           style={{
             width: '100%',
             height: 50,
           }}
-          onPress={async () => signInWithApple()}
+          onPress={() =>
+            signInWithApple().then(() => console.log('Apple sign-in complete!'))
+          }
         />
-        <Button onPress={() => googleLogin()} viewStyle={styles.buttonStyle}>
+        <Button onPress={onClickGoogleLogin} viewStyle={styles.buttonStyle}>
           <GoggleLogo />
           <Text bold style={{ fontSize: 18 }}>
-            Sign in with Google
+            Google로 로그인
           </Text>
         </Button>
       </View>
@@ -86,10 +89,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.dark.google,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     flex: 1,
     flexGrow: 1,
-    paddingLeft: 63,
     borderRadius: 5,
     columnGap: 5,
   },
