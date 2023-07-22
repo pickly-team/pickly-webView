@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Constants from 'expo-constants';
 import client from '../../lib/client';
-import { MODE } from '../../app';
+import { MODE } from '../../app/webview';
 export interface Json {
   email: string;
   isHardMode: boolean;
@@ -49,7 +49,10 @@ export interface GETMemberIdQueryParams {
   token?: string;
 }
 
-const GET_MEMBER_ID = (params: GETMemberIdQueryParams) => ['get', params.token];
+export const GET_MEMBER_ID = (params: GETMemberIdQueryParams) => [
+  'GET_MEMBER_ID',
+  params.token,
+];
 
 export const useGetMemberId = (params: GETMemberIdQueryParams) => {
   return useQuery(GET_MEMBER_ID(params), () => getMemberIdAPI(params), {
