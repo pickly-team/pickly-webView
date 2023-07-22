@@ -14,6 +14,10 @@ export default {
       resizeMode: 'contain',
       backgroundColor: '#50A973',
     },
+    updates: {
+      url: 'https://u.expo.dev/2ff1c8d5-ce1d-47d7-86d7-ebe5d015089a',
+    },
+    runtimeVersion: '1.0.0',
     assetBundlePatterns: ['**/*'],
     notification: {
       icon: './assets/images/notification-icon.png',
@@ -22,7 +26,7 @@ export default {
       googleServicesFile: './ios/GoogleService-Info.plist',
       supportsTablet: true,
       bundleIdentifier: 'com.ww8007.pickly',
-      buildNumber: '10',
+      buildNumber: '11',
       infoPlist: {
         UIBackgroundModes: ['remote-notification'],
       },
