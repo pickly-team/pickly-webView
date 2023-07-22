@@ -30,7 +30,7 @@ export default function RootLayout() {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: 'index',
+  initialRouteName: '',
 };
 
 function RootLayoutNav() {
@@ -40,12 +40,21 @@ function RootLayoutNav() {
 
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
-      if (user) router.push('login');
+      if (user) router.push('');
       else router.push('login');
     });
   }, [auth]);
 
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+      mutations: {
+        retry: false,
+      },
+    },
+  });
 
   return (
     <QueryClientProvider client={queryClient}>
