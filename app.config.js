@@ -26,7 +26,7 @@ export default {
       googleServicesFile: './ios/GoogleService-Info.plist',
       supportsTablet: true,
       bundleIdentifier: 'com.ww8007.pickly',
-      buildNumber: '10',
+      buildNumber: '11',
       infoPlist: {
         UIBackgroundModes: ['remote-notification'],
       },
