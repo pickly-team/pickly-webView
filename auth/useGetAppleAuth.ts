@@ -1,6 +1,7 @@
 import appleAuth from '@invertase/react-native-apple-authentication';
 import { useEffect } from 'react';
 import auth from '@react-native-firebase/auth';
+import useSignInUser from './useSignInUser';
 
 const useGetAppleAuth = () => {
   const signInWithApple = async () => {
@@ -26,13 +27,14 @@ const useGetAppleAuth = () => {
     return auth().signInWithCredential(appleCredential);
   };
 
+  const { signInUser } = useSignInUser();
+
   useEffect(() => {
     const unsubscribe = auth().onAuthStateChanged(async (user) => {
       if (user) {
-        const { uid, email, displayName } = user;
-        console.log('uid:', uid);
-        console.log('email:', email);
-        console.log('displayName:', displayName);
+        const { getIdToken } = user;
+        const token = await getIdToken();
+        signInUser(token);
       }
     });
     return () => {
