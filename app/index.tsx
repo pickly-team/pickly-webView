@@ -82,6 +82,8 @@ export default function App() {
           ref={webviewRef}
           style={[styles.container, { opacity: loading ? 0 : 1 }]}
           // source={{ uri: `http://localhost:3000${webviewURL[mode]}` }}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
           source={{ uri: `https://app.pickly.today${webviewURL[mode]}` }}
         />
       </SafeAreaView>
