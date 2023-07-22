@@ -45,9 +45,7 @@ export default function ModalScreen() {
             width: '100%',
             height: 50,
           }}
-          onPress={() =>
-            signInWithApple().then(() => console.log('Apple sign-in complete!'))
-          }
+          onPress={signInWithApple}
         />
         <Button onPress={onClickGoogleLogin} viewStyle={styles.buttonStyle}>
           <GoggleLogo />
