@@ -82,6 +82,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     auth().onAuthStateChanged(async (user) => {
+      if (!user) router.push('login');
       const token = await user?.getIdToken();
       setToken(token ?? undefined);
     });
