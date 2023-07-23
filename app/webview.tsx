@@ -62,6 +62,7 @@ export default function App() {
           // source={{
           //   uri: `http://localhost:3000${webviewURL[mode](userInfo?.id)}`,
           // }}
+          allowsBackForwardNavigationGestures={true}
         />
       </SafeAreaView>
     </>
