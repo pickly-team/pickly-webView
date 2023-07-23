@@ -46,12 +46,12 @@ export default function App() {
           token: user?.token,
           memberId: serverMemberId,
         })();
-      }, 100);
+      }, 1000);
 
       setTimeout(() => {
         clearInterval(bridgeCall);
         setLoading(false);
-      }, 1500);
+      }, 2000);
     }
   }, [serverMemberId, user?.token]);
 
@@ -67,7 +67,9 @@ export default function App() {
           // source={{
           //   uri: `http://localhost:3000${webviewURL[mode](userInfo?.id)}`,
           // }}
-          source={{ uri: `https://app.pickly.today${webviewURL[mode]}` }}
+          source={{
+            uri: `https://app.pickly.today${webviewURL[mode](userInfo?.id)}`,
+          }}
         />
       </SafeAreaView>
     </>
