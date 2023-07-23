@@ -77,6 +77,7 @@ type AuthProviderProps = {
 };
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
   const [token, setToken] = useState<string | undefined>(undefined);
 
@@ -97,7 +98,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   } = useGetMemberId({
     token: token,
   });
-  const router = useRouter();
 
   useEffect(() => {
     if (isGetMemberIdLoading) return;
