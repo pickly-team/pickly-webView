@@ -4,7 +4,12 @@ import {
   ThemeProvider,
 } from '@react-navigation/native';
 import { SplashScreen, Stack } from 'expo-router';
-import { AppState, AppStateStatus, useColorScheme } from 'react-native';
+import {
+  AppState,
+  AppStateStatus,
+  BackHandler,
+  useColorScheme,
+} from 'react-native';
 import useSettingFont from '../common/hooks/useSettingFont';
 import { AuthProvider } from '../auth/AuthContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -59,6 +64,15 @@ function RootLayoutNav() {
       },
     },
   });
+
+  // 사용자의 뒤로가기 버튼을 제거
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => true,
+    );
+    return () => backHandler.remove();
+  }, []);
 
   const appState = useRef(AppState.currentState);
   const [activeAppState, setActiveAppState] = useState(appState.current);
