@@ -38,22 +38,6 @@ export default function App() {
 
   // 2. 웹뷰 로그인
   const webviewRef = useRef<WebView>(null);
-  useEffect(() => {
-    if (!serverMemberId) return;
-    if (serverMemberId) {
-      const bridgeCall = setInterval(() => {
-        webviewBridge(webviewRef, 'login', {
-          token: user?.token,
-          memberId: serverMemberId,
-        })();
-
-      setTimeout(() => {
-        clearInterval(bridgeCall);
-        setLoading(false);
-      }, 1500);
-    }
-  }, [serverMemberId, user?.token]);
-
   if (isGetMemberIdLoading || isGetUserInfoLoading) return <Loading />;
 
   return (
@@ -63,12 +47,21 @@ export default function App() {
         <WebView
           ref={webviewRef}
           style={[styles.container, { opacity: loading ? 0 : 1 }]}
-          // source={{
-          //   uri: `http://localhost:3000${webviewURL[mode](userInfo?.id)}`,
-          // }}
+          onMessage={(event) => {
+            if (event.nativeEvent.data === 'login') {
+              webviewBridge(webviewRef, 'login', {
+                token: user?.token,
+                memberId: serverMemberId ?? 0,
+              })();
+              setLoading(false);
+            }
+          }}
           source={{
             uri: `https://app.pickly.today${webviewURL[mode](userInfo?.id)}`,
           }}
+          // source={{
+          //   uri: `http://localhost:3000${webviewURL[mode](userInfo?.id)}`,
+          // }}
         />
       </SafeAreaView>
     </>
