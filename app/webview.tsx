@@ -46,12 +46,11 @@ export default function App() {
           token: user?.token,
           memberId: serverMemberId,
         })();
-      }, 1000);
 
       setTimeout(() => {
         clearInterval(bridgeCall);
         setLoading(false);
-      }, 2000);
+      }, 1500);
     }
   }, [serverMemberId, user?.token]);
 
