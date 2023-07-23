@@ -6,8 +6,6 @@ import {
 import { SplashScreen, Stack, useRouter } from 'expo-router';
 import { useColorScheme } from 'react-native';
 import useSettingFont from '../common/hooks/useSettingFont';
-import auth from '@react-native-firebase/auth';
-import { useEffect } from 'react';
 import { AuthProvider } from '../auth/AuthContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -38,13 +36,6 @@ function RootLayoutNav() {
 
   const router = useRouter();
 
-  useEffect(() => {
-    auth().onAuthStateChanged((user) => {
-      if (user) router.push('');
-      else router.push('login');
-    });
-  }, [auth]);
-
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -62,9 +53,10 @@ function RootLayoutNav() {
         <ThemeProvider
           value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
         >
-          <Stack screenOptions={{ headerShown: false }}>
+          <Stack screenOptions={{ headerShown: false, animation: 'none' }}>
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="login" options={{ headerShown: false }} />
+            <Stack.Screen name="webview" options={{ headerShown: false }} />
           </Stack>
         </ThemeProvider>
       </AuthProvider>

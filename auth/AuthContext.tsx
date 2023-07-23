@@ -4,8 +4,11 @@ import {
   useReducer,
   useCallback,
   useMemo,
+  useState,
 } from 'react';
 import auth from '@react-native-firebase/auth';
+import { useGetMemberId } from './api/login';
+import { useRouter } from 'expo-router';
 
 export type ActionMapType<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
@@ -75,6 +78,34 @@ type AuthProviderProps = {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [token, setToken] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    auth().onAuthStateChanged(async (user) => {
+      const token = await user?.getIdToken();
+      setToken(token ?? undefined);
+    });
+  }, [auth]);
+
+  // 1. 유저 로그인
+  // 1.1 유저가 로그인 되어있는지 확인
+  const {
+    data: serverMemberId,
+    isLoading: isGetMemberIdLoading,
+    isError: isGetMemberIdError,
+  } = useGetMemberId({
+    token: token,
+  });
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isGetMemberIdLoading) return;
+    if (serverMemberId === undefined && isGetMemberIdError) {
+      router.push('login');
+      return;
+    }
+    if (serverMemberId) router.push('webview');
+  }, [serverMemberId, isGetMemberIdLoading, isGetMemberIdError]);
 
   const initialize = useCallback(async () => {
     try {
