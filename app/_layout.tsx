@@ -3,11 +3,21 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from '@react-navigation/native';
-import { SplashScreen, Stack, useRouter } from 'expo-router';
-import { useColorScheme } from 'react-native';
+import { SplashScreen, Stack } from 'expo-router';
+import { AppState, AppStateStatus, useColorScheme } from 'react-native';
 import useSettingFont from '../common/hooks/useSettingFont';
 import { AuthProvider } from '../auth/AuthContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import messaging from '@react-native-firebase/messaging';
+import useNotification from '../common/hooks/useNotification';
+import { useEffect, useRef, useState } from 'react';
+import * as Clipboard from 'expo-clipboard';
+
+// Register background handler
+messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+  console.log('Message handled in the background!', remoteMessage);
+  Clipboard.setStringAsync(JSON.stringify(remoteMessage));
+});
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -16,6 +26,12 @@ export {
 
 export default function RootLayout() {
   const { loaded } = useSettingFont();
+
+  const { requestUserPermission } = useNotification();
+
+  useEffect(() => {
+    requestUserPermission();
+  }, []);
 
   return (
     <>
@@ -33,9 +49,6 @@ export const unstable_settings = {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
-
-  const router = useRouter();
-
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -46,6 +59,32 @@ function RootLayoutNav() {
       },
     },
   });
+
+  const appState = useRef(AppState.currentState);
+  const [activeAppState, setActiveAppState] = useState(appState.current);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange,
+    );
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+  const handleAppStateChange = (nextAppState: AppStateStatus) => {
+    if (
+      appState.current.match(/inactive|background/) &&
+      nextAppState === 'active'
+    ) {
+      console.log('App has come to the foreground!');
+    }
+    appState.current = nextAppState;
+    setActiveAppState(appState.current);
+    console.log('AppState', activeAppState);
+  };
 
   return (
     <QueryClientProvider client={queryClient}>
