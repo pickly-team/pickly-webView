@@ -1,42 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
-import { AppState, AppStateStatus, Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { View } from '../components/Themed';
 import Button from '../ui/Button';
 import Colors from '../constants/Colors';
 import { Text } from '../ui/Text';
 import useGetGoogleAuth from '../auth/useGetGoogleAuth';
-import { useEffect, useState } from 'react';
 import GoggleLogo from '../ui/GoggleLogo';
 import { AppleButton } from '@invertase/react-native-apple-authentication';
 import useGetAppleAuth from '../auth/useGetAppleAuth';
-import { useRouter } from 'expo-router';
 
 export default function ModalScreen() {
   const { onClickGoogleLogin } = useGetGoogleAuth();
   const { signInWithApple } = useGetAppleAuth();
-
-  const [appState, setAppState] = useState(AppState.currentState);
-
-  useEffect(() => {
-    AppState.addEventListener('change', handleAppStateChange);
-  }, []);
-
-  const router = useRouter();
-
-  const handleAppStateChange = (nextAppState: AppStateStatus) => {
-    if (appState.match(/inactive|background/) && nextAppState === 'active') {
-      router.replace('');
-    }
-    setAppState(nextAppState);
-  };
 
   return (
     <View style={styles.container}>
       <Text bold style={styles.logoText}>
         Pickly
       </Text>
-
-      {/* <Text style={styles.title}>Modal</Text> */}
       <View style={styles.buttonWrapper}>
         <AppleButton
           buttonStyle={AppleButton.Style.WHITE}
