@@ -15,7 +15,6 @@ const putNotificationSettingAPI = async ({
   putData,
   token,
 }: PUTNotificationSettings) => {
-  console.log('putData', putData, memberId);
   const { data } = await client({
     method: 'put',
     url: `/members/${memberId}/notification-settings`,
