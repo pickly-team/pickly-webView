@@ -14,7 +14,6 @@ import useSettingFont from '../common/hooks/useSettingFont';
 import { AuthProvider } from '../auth/AuthContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import messaging from '@react-native-firebase/messaging';
-import useNotification from '../common/hooks/useNotification';
 import { useEffect, useRef, useState } from 'react';
 import * as Clipboard from 'expo-clipboard';
 
@@ -31,12 +30,6 @@ export {
 
 export default function RootLayout() {
   const { loaded } = useSettingFont();
-
-  const { requestUserPermission } = useNotification();
-
-  useEffect(() => {
-    requestUserPermission();
-  }, []);
 
   return (
     <>
