@@ -1,12 +1,12 @@
 import { WebView } from 'react-native-webview';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import Colors from '../constants/Colors';
-import useNotification from '../common/hooks/useNotification';
 import { useGETMemberInfo, useGetMemberId } from '../auth/api/login';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { webviewBridge } from '../common/util/webviewBridge';
 import useAuthContext from '../auth/useAuthContext';
 import Loading from '../common/ui/Loading';
+import useNotification from '../notification/hooks/useNotification';
 
 export type MODE = 'SIGN_IN' | 'SIGN_UP';
 
@@ -16,7 +16,6 @@ const webviewURL: Record<MODE, (id?: number) => string> = {
 };
 
 export default function App() {
-  // const { expoPushToken, notification } = useNotification();
   // FIRST RENDER
   const { user } = useAuthContext();
   const [mode, setMode] = useState<MODE>('SIGN_UP');
@@ -36,6 +35,11 @@ export default function App() {
 
   const [loading, setLoading] = useState(true);
 
+  // 3. 알림 설정
+  const { requestUserPermission } = useNotification({
+    memberId: userInfo?.id ?? 0,
+  });
+
   // 2. 웹뷰 로그인
   const webviewRef = useRef<WebView>(null);
   if (isGetMemberIdLoading || isGetUserInfoLoading) return <Loading />;
@@ -54,6 +58,9 @@ export default function App() {
                 memberId: serverMemberId ?? 0,
               })();
               setLoading(false);
+            }
+            if (event.nativeEvent.data == 'notification') {
+              requestUserPermission();
             }
           }}
           source={{
