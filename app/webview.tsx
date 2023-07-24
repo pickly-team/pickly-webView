@@ -63,6 +63,11 @@ export default function App() {
           //   uri: `http://localhost:3000${webviewURL[mode](userInfo?.id)}`,
           // }}
           allowsBackForwardNavigationGestures={true}
+          onNavigationStateChange={(navState) => {
+            if (navState.navigationType === 'backforward') {
+              webviewBridge(webviewRef, 'initialize', null)();
+            }
+          }}
         />
       </SafeAreaView>
     </>
