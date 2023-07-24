@@ -9,6 +9,7 @@ interface BridgeParams {
     token: string;
     memberId: number;
   };
+  initialize: null;
 }
 
 export function webviewBridge<T extends keyof BridgeParams>(
@@ -25,6 +26,11 @@ export function webviewBridge<T extends keyof BridgeParams>(
   if (!checkObjectIsEmpty) {
     return wrapLoggingWithArg(() =>
       ref.current?.postMessage(JSON.stringify({ message, params })),
+    );
+  }
+  if (checkObjectIsEmpty) {
+    return wrapLoggingWithArg(() =>
+      ref.current?.postMessage(JSON.stringify({ message })),
     );
   }
 
