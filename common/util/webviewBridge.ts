@@ -9,6 +9,7 @@ interface BridgeParams {
     token: string;
     memberId: number;
   };
+  /** 초기화 */
   initialize: null;
 }
 
