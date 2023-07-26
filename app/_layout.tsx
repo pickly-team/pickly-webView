@@ -67,32 +67,6 @@ function RootLayoutNav() {
     return () => backHandler.remove();
   }, []);
 
-  const appState = useRef(AppState.currentState);
-  const [activeAppState, setActiveAppState] = useState(appState.current);
-
-  useEffect(() => {
-    const subscription = AppState.addEventListener(
-      'change',
-      handleAppStateChange,
-    );
-
-    return () => {
-      subscription.remove();
-    };
-  }, []);
-
-  const handleAppStateChange = (nextAppState: AppStateStatus) => {
-    if (
-      appState.current.match(/inactive|background/) &&
-      nextAppState === 'active'
-    ) {
-      console.log('App has come to the foreground!');
-    }
-    appState.current = nextAppState;
-    setActiveAppState(appState.current);
-    console.log('AppState', activeAppState);
-  };
-
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>

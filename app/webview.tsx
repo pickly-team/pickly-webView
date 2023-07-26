@@ -2,11 +2,12 @@ import { WebView } from 'react-native-webview';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import Colors from '../constants/Colors';
 import { useGETMemberInfo, useGetMemberId } from '../auth/api/login';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { webviewBridge } from '../common/util/webviewBridge';
 import useAuthContext from '../auth/useAuthContext';
 import Loading from '../common/ui/Loading';
 import useNotification from '../notification/hooks/useNotification';
+import useAppState from '../common/hooks/useAppState';
 
 export type MODE = 'SIGN_IN' | 'SIGN_UP';
 
@@ -39,6 +40,17 @@ export default function App() {
   const { requestUserPermission } = useNotification({
     memberId: userInfo?.id ?? 0,
   });
+
+  // 4. 앱 상태 체크
+  const { activeAppState } = useAppState();
+
+  useEffect(() => {
+    if (activeAppState === 'active') {
+      setLoading(true);
+      webviewRef.current?.reload();
+      setTimeout(() => setLoading(false), 1000);
+    }
+  }, [activeAppState, user?.token, serverMemberId]);
 
   // 2. 웹뷰 로그인
   const webviewRef = useRef<WebView>(null);
