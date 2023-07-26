@@ -6,7 +6,9 @@ import Colors from '../constants/Colors';
 import { Text } from '../ui/Text';
 import useGetGoogleAuth from '../auth/useGetGoogleAuth';
 import GoggleLogo from '../ui/GoggleLogo';
-import { AppleButton } from '@invertase/react-native-apple-authentication';
+import appleAuth, {
+  AppleButton,
+} from '@invertase/react-native-apple-authentication';
 import useGetAppleAuth from '../auth/useGetAppleAuth';
 
 export default function ModalScreen() {
@@ -19,15 +21,17 @@ export default function ModalScreen() {
         Pickly
       </Text>
       <View style={styles.buttonWrapper}>
-        <AppleButton
-          buttonStyle={AppleButton.Style.WHITE}
-          buttonType={AppleButton.Type.SIGN_IN}
-          style={{
-            width: '100%',
-            height: 50,
-          }}
-          onPress={signInWithApple}
-        />
+        {appleAuth.isSupported && (
+          <AppleButton
+            buttonStyle={AppleButton.Style.WHITE}
+            buttonType={AppleButton.Type.SIGN_IN}
+            style={{
+              width: '100%',
+              height: 50,
+            }}
+            onPress={signInWithApple}
+          />
+        )}
         <Button onPress={onClickGoogleLogin} viewStyle={styles.buttonStyle}>
           <GoggleLogo />
           <Text bold style={{ fontSize: 18 }}>

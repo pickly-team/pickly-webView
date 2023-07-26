@@ -48,7 +48,7 @@ export default function App() {
     if (activeAppState === 'active') {
       setLoading(true);
       webviewRef.current?.reload();
-      setTimeout(() => setLoading(false), 1000);
+      setTimeout(() => setLoading(false), 2000);
     }
   }, [activeAppState, user?.token, serverMemberId]);
 

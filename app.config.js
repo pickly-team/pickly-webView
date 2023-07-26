@@ -23,7 +23,7 @@ export default {
       icon: './assets/images/notification-icon.png',
     },
     ios: {
-      googleServicesFile: './ios/GoogleService-Info.plist',
+      googleServicesFile: process.env.IOS_INFO_PLIST,
       supportsTablet: true,
       bundleIdentifier: 'com.ww8007.pickly',
       buildNumber: '12',
@@ -32,7 +32,7 @@ export default {
       },
     },
     android: {
-      googleServicesFile: './google-services.json',
+      googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
       package: 'com.ww8007.pickly',
       adaptiveIcon: {
         foregroundImage: './assets/images/adaptive-icon.png',
