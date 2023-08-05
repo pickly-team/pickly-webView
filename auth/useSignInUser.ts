@@ -10,7 +10,7 @@ const useSignInUser = () => {
   useEffect(() => {
     if (isSuccess) {
       refetch();
-      router.push('webview');
+      router.replace('initialWebview');
     }
   }, [isSuccess]);
 

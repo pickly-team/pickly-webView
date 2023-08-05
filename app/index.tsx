@@ -19,7 +19,7 @@ const index = () => {
 
   useEffect(() => {
     if (serverMemberId) {
-      router.push('webview');
+      router.push('initialWebview');
     }
   }, [serverMemberId, router]);
 

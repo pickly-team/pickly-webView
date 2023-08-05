@@ -105,7 +105,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       router.push('login');
       return;
     }
-    if (serverMemberId) router.push('webview');
+    if (serverMemberId) router.push('initialWebview');
   }, [serverMemberId, isGetMemberIdLoading, isGetMemberIdError]);
 
   const initialize = useCallback(async () => {
