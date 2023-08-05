@@ -58,6 +58,7 @@ export default {
       iosClientId: process.env.IOS_CLIENT_ID,
       androidClientId: process.env.ANDROID_CLIENT_ID,
       serverEndpoint: process.env.SERVER_ENDPOINT,
+      clientUrl: process.env.CLIENT_URL,
     },
     plugins: [
       '@react-native-firebase/app',
