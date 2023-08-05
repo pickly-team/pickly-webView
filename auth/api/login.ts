@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Constants from 'expo-constants';
 import client from '../../lib/client';
-import { MODE } from '../../app/webview';
+import { MODE } from '../../app/initialWebview';
 export interface Json {
   email: string;
   isHardMode: boolean;
@@ -104,6 +104,7 @@ export const useGETMemberInfo = (params: GETUserInfoQueryParams) => {
       enabled: params.loginId !== 0,
       onSuccess: (data) => {
         if (data.nickname) params.setMode('SIGN_IN');
+        console.log('data:', data);
       },
       onError: (error) => {
         console.log('error:', error);
