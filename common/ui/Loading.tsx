@@ -22,6 +22,7 @@ const Styles = StyleSheet.create({
     height: '100%',
 
     backgroundColor: Colors.dark.logoGreen,
+    zIndex: 10,
   },
   container: {
     width: '100%',
