@@ -4,17 +4,12 @@ import {
   ThemeProvider,
 } from '@react-navigation/native';
 import { SplashScreen, Stack } from 'expo-router';
-import {
-  AppState,
-  AppStateStatus,
-  BackHandler,
-  useColorScheme,
-} from 'react-native';
+import { BackHandler, useColorScheme } from 'react-native';
 import useSettingFont from '../common/hooks/useSettingFont';
 import { AuthProvider } from '../auth/AuthContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import messaging from '@react-native-firebase/messaging';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import * as Clipboard from 'expo-clipboard';
 
 // Register background handler
@@ -74,9 +69,22 @@ function RootLayoutNav() {
           value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
         >
           <Stack screenOptions={{ headerShown: false, animation: 'none' }}>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="login" options={{ headerShown: false }} />
-            <Stack.Screen name="webview" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="index"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="login"
+              options={{
+                animation: 'flip',
+              }}
+            />
+            <Stack.Screen
+              name="initialWebview"
+              options={{ animation: 'none' }}
+            />
           </Stack>
         </ThemeProvider>
       </AuthProvider>
