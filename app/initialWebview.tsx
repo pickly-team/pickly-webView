@@ -27,6 +27,7 @@ import Constants from 'expo-constants';
 import { webviewBridge } from '../common/util/webviewBridge';
 import useNotification from '../notification/hooks/useNotification';
 import { captureScreen } from 'react-native-view-shot';
+import { useRouter } from 'expo-router';
 
 export type MODE = 'SIGN_IN' | 'SIGN_UP';
 const clientUrl = Constants.expoConfig?.extra?.clientUrl || '';
@@ -122,6 +123,8 @@ const App = () => {
     memberId: userInfo?.id ?? 0,
   });
 
+  // 4. 웹뷰 메시지
+  const router = useRouter();
   const onWebViewMessage = (event: WebViewMessageEvent) => {
     if (event.nativeEvent.data === 'login') {
       webviewBridge(webviewRef, 'login', {
@@ -130,12 +133,15 @@ const App = () => {
       })();
       setLoading(false);
     }
-    if (event.nativeEvent.data == 'notification') {
+    if (event.nativeEvent.data === 'notification') {
       requestUserPermission();
     }
-    if (event.nativeEvent.data == 'goBack') {
+    if (event.nativeEvent.data === 'goBack') {
       captureScreenFn(setSnapshotUri);
       setIsGoingBack(true);
+    }
+    if (event.nativeEvent.data === 'signUp') {
+      router.replace('login');
     }
   };
 
