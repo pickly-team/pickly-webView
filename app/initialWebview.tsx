@@ -52,7 +52,7 @@ const App = () => {
 
   const animationValue = useRef(new Animated.Value(windowWidth / 4)).current;
   const snapShotAnimationValue = useRef(new Animated.Value(0)).current;
-  const imageOpacity = useRef(new Animated.Value(0.8)).current;
+  const imageOpacity = useRef(new Animated.Value(0)).current;
   const [isInitialized, setIsInitialized] = useState(false);
 
   const { user } = useAuthContext();
@@ -76,28 +76,30 @@ const App = () => {
     if (!isGoingBack) captureScreenFn(setSnapshotUri);
     if (EXPLICIT_URL.includes(url) && !isGoingBack) {
       if (isInitialized) return;
-      Animated.timing(animationValue, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-        easing: Easing.sin,
-      }).start(() => {
-        setIsGoingBack(false);
-        setIsInitialized(true);
+      requestAnimationFrame(() => {
+        Animated.timing(animationValue, {
+          toValue: 0,
+          duration: 450,
+          useNativeDriver: true,
+        }).start(() => {
+          setIsGoingBack(false);
+          setIsInitialized(true);
+        });
       });
     }
 
     if (url) {
       snapShotAnimationValue.setValue(0);
-      animationValue.setValue(isGoingBack ? -windowWidth : windowWidth / 4);
+      animationValue.setValue(isGoingBack ? -windowWidth / 2 : windowWidth / 4);
 
-      Animated.timing(animationValue, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-        easing: Easing.sin,
-      }).start(() => {
-        setIsGoingBack(false);
+      requestAnimationFrame(() => {
+        Animated.timing(animationValue, {
+          toValue: 0,
+          duration: 450,
+          useNativeDriver: true,
+        }).start(() => {
+          setIsGoingBack(false);
+        });
       });
 
       webviewBridge(webviewRef, 'initialize', null)();
@@ -106,15 +108,16 @@ const App = () => {
 
   // 뒤로 가기 상태가 변경되면 애니메이션 업데이트
   useEffect(() => {
-    snapShotAnimationValue.setValue(0);
+    snapShotAnimationValue.setValue(windowWidth / 2 + 40);
 
-    Animated.timing(snapShotAnimationValue, {
-      toValue: windowWidth,
-      duration: 300,
-      useNativeDriver: true,
-      easing: Easing.sin,
-    }).start(() => {
-      setIsGoingBack(false);
+    requestAnimationFrame(() => {
+      Animated.timing(snapShotAnimationValue, {
+        toValue: windowWidth,
+        duration: 400,
+        useNativeDriver: true,
+      }).start(() => {
+        setIsGoingBack(false);
+      });
     });
   }, [isGoingBack]);
 
@@ -157,6 +160,7 @@ const App = () => {
 
         {snapshotUri && (
           <Animated.View
+            shouldRasterizeIOS={true}
             style={[
               styles.container,
               {
@@ -171,13 +175,14 @@ const App = () => {
           >
             <Image
               onLoad={() => {
-                Animated.timing(imageOpacity, {
-                  toValue: 1,
-                  duration: 400,
-                  useNativeDriver: true,
-                  easing: Easing.sin,
-                }).start(() => {
-                  imageOpacity.setValue(0);
+                requestAnimationFrame(() => {
+                  Animated.timing(imageOpacity, {
+                    toValue: 1,
+                    duration: 450,
+                    useNativeDriver: true,
+                  }).start(() => {
+                    imageOpacity.setValue(0);
+                  });
                 });
               }}
               style={styles.fullImage}
@@ -188,6 +193,7 @@ const App = () => {
 
         {/* 기존 WebView */}
         <Animated.View
+          shouldRasterizeIOS={true}
           style={[
             styles.container,
             {
@@ -251,6 +257,7 @@ const captureScreenFn = async (
   captureScreen({
     format: 'png',
     quality: 0.8,
+    handleGLSurfaceViewOnAndroid: true,
     fileName: 'screenshot',
   }).then((uri) => setSnapShotUri(uri));
 };
