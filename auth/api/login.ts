@@ -104,7 +104,6 @@ export const useGETMemberInfo = (params: GETUserInfoQueryParams) => {
       enabled: params.loginId !== 0,
       onSuccess: (data) => {
         if (data.nickname) params.setMode('SIGN_IN');
-        console.log('data:', data);
       },
       onError: (error) => {
         console.log('error:', error);
