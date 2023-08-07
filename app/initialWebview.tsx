@@ -217,7 +217,11 @@ const App = () => {
               onNavigationStateChange={handleNavigationStateChange}
               allowsBackForwardNavigationGestures={true}
               onContentProcessDidTerminate={() => {
+                setLoading(true);
                 webviewRef.current?.reload();
+                setTimeout(() => {
+                  setLoading(false);
+                }, 2000);
               }}
             />
           </SafeAreaView>
