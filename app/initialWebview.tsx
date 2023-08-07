@@ -79,7 +79,7 @@ const App = () => {
       requestAnimationFrame(() => {
         Animated.timing(animationValue, {
           toValue: 0,
-          duration: 450,
+          duration: 500,
           useNativeDriver: true,
         }).start(() => {
           setIsGoingBack(false);
@@ -95,7 +95,7 @@ const App = () => {
       requestAnimationFrame(() => {
         Animated.timing(animationValue, {
           toValue: 0,
-          duration: 450,
+          duration: 500,
           useNativeDriver: true,
         }).start(() => {
           setIsGoingBack(false);
@@ -113,7 +113,7 @@ const App = () => {
     requestAnimationFrame(() => {
       Animated.timing(snapShotAnimationValue, {
         toValue: windowWidth,
-        duration: 400,
+        duration: 500,
         useNativeDriver: true,
       }).start(() => {
         setIsGoingBack(false);
@@ -178,7 +178,7 @@ const App = () => {
                 requestAnimationFrame(() => {
                   Animated.timing(imageOpacity, {
                     toValue: 1,
-                    duration: 450,
+                    duration: 500,
                     useNativeDriver: true,
                   }).start(() => {
                     imageOpacity.setValue(0);
@@ -216,6 +216,9 @@ const App = () => {
               onMessage={onWebViewMessage}
               onNavigationStateChange={handleNavigationStateChange}
               allowsBackForwardNavigationGestures={true}
+              onContentProcessDidTerminate={() => {
+                webviewRef.current?.reload();
+              }}
             />
           </SafeAreaView>
         </Animated.View>
@@ -256,7 +259,7 @@ const captureScreenFn = async (
 ) => {
   captureScreen({
     format: 'png',
-    quality: 0.8,
+    quality: 0,
     handleGLSurfaceViewOnAndroid: true,
     fileName: 'screenshot',
   }).then((uri) => setSnapShotUri(uri));
