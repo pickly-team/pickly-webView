@@ -2,8 +2,9 @@ import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
+  createNavigationContainerRef,
 } from '@react-navigation/native';
-import { SplashScreen, Stack } from 'expo-router';
+import { SplashScreen, Stack, useNavigation, useRouter } from 'expo-router';
 import { BackHandler, useColorScheme } from 'react-native';
 import useSettingFont from '../common/hooks/useSettingFont';
 import { AuthProvider } from '../auth/AuthContext';
@@ -11,12 +12,24 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import messaging from '@react-native-firebase/messaging';
 import { useEffect } from 'react';
 import * as Clipboard from 'expo-clipboard';
+import webviewStore from '../common/state/webview';
 
 // Register background handler
 messaging().setBackgroundMessageHandler(async (remoteMessage) => {
   console.log('Message handled in the background!', remoteMessage);
   Clipboard.setStringAsync(JSON.stringify(remoteMessage));
 });
+
+interface NavigationParams {
+  index: undefined;
+  login: undefined;
+  initialWebview: undefined;
+  webview: {
+    url: string;
+  };
+}
+
+export const navigationRef = createNavigationContainerRef<NavigationParams>();
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -84,6 +97,10 @@ function RootLayoutNav() {
             <Stack.Screen
               name="initialWebview"
               options={{ animation: 'none' }}
+            />
+            <Stack.Screen
+              name="bookmarkWebview"
+              options={{ animation: 'flip' }}
             />
           </Stack>
         </ThemeProvider>
