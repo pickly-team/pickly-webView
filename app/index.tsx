@@ -18,10 +18,14 @@ const index = () => {
   });
 
   useEffect(() => {
+    if (user && !user.token) {
+      router.push('login');
+      return;
+    }
     if (serverMemberId) {
       router.push('initialWebview');
     }
-  }, [serverMemberId, router]);
+  }, [serverMemberId, router, user]);
 
   return <Loading />;
 };

@@ -87,7 +87,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const token = await user?.getIdToken();
       setToken(token ?? undefined);
     });
-  }, [auth]);
+  }, [auth()]);
 
   // 1. 유저 로그인
   // 1.1 유저가 로그인 되어있는지 확인
@@ -105,8 +105,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       router.push('login');
       return;
     }
-    if (serverMemberId) router.push('initialWebview');
-  }, [serverMemberId, isGetMemberIdLoading, isGetMemberIdError]);
+    if (serverMemberId && state.user) {
+      router.push('initialWebview');
+    }
+  }, [serverMemberId, isGetMemberIdLoading, isGetMemberIdError, state]);
 
   const initialize = useCallback(async () => {
     try {
