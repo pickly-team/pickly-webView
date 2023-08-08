@@ -1,5 +1,4 @@
 import appleAuth from '@invertase/react-native-apple-authentication';
-import { useEffect } from 'react';
 import auth from '@react-native-firebase/auth';
 import useSignInUser from './useSignInUser';
 
