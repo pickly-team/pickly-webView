@@ -28,6 +28,7 @@ import { webviewBridge } from '../common/util/webviewBridge';
 import useNotification from '../notification/hooks/useNotification';
 import { captureScreen } from 'react-native-view-shot';
 import { useRouter } from 'expo-router';
+import auth from '@react-native-firebase/auth';
 
 export type MODE = 'SIGN_IN' | 'SIGN_UP';
 const clientUrl = Constants.expoConfig?.extra?.clientUrl || '';
@@ -50,7 +51,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [isGoingBack, setIsGoingBack] = useState(false); // 뒤로 가기 상태 관리
 
-  const animationValue = useRef(new Animated.Value(windowWidth / 4)).current;
+  const animationValue = useRef(new Animated.Value(windowWidth)).current;
   const snapShotAnimationValue = useRef(new Animated.Value(0)).current;
   const imageOpacity = useRef(new Animated.Value(0)).current;
   const [isInitialized, setIsInitialized] = useState(false);
@@ -79,7 +80,8 @@ const App = () => {
       requestAnimationFrame(() => {
         Animated.timing(animationValue, {
           toValue: 0,
-          duration: 500,
+          duration: 300,
+          easing: Easing.linear,
           useNativeDriver: true,
         }).start(() => {
           setIsGoingBack(false);
@@ -90,12 +92,13 @@ const App = () => {
 
     if (url) {
       snapShotAnimationValue.setValue(0);
-      animationValue.setValue(isGoingBack ? -windowWidth / 2 : windowWidth / 4);
+      animationValue.setValue(isGoingBack ? -windowWidth / 2 : windowWidth);
 
       requestAnimationFrame(() => {
         Animated.timing(animationValue, {
           toValue: 0,
-          duration: 500,
+          duration: 300,
+          easing: Easing.linear,
           useNativeDriver: true,
         }).start(() => {
           setIsGoingBack(false);
@@ -113,8 +116,9 @@ const App = () => {
     requestAnimationFrame(() => {
       Animated.timing(snapShotAnimationValue, {
         toValue: windowWidth,
-        duration: 500,
+        duration: 300,
         useNativeDriver: true,
+        easing: Easing.linear,
       }).start(() => {
         setIsGoingBack(false);
       });
@@ -130,10 +134,12 @@ const App = () => {
   const router = useRouter();
   const onWebViewMessage = (event: WebViewMessageEvent) => {
     if (event.nativeEvent.data === 'login') {
-      webviewBridge(webviewRef, 'login', {
-        token: user?.token,
-        memberId: serverMemberId ?? 0,
-      })();
+      if (serverMemberId) {
+        webviewBridge(webviewRef, 'login', {
+          token: user?.token,
+          memberId: serverMemberId,
+        })();
+      }
       setLoading(false);
     }
     if (event.nativeEvent.data === 'notification') {
@@ -144,7 +150,7 @@ const App = () => {
       setIsGoingBack(true);
     }
     if (event.nativeEvent.data === 'signUp') {
-      router.replace('login');
+      auth().signOut();
     }
   };
 
@@ -178,8 +184,9 @@ const App = () => {
                 requestAnimationFrame(() => {
                   Animated.timing(imageOpacity, {
                     toValue: 1,
-                    duration: 500,
+                    duration: 300,
                     useNativeDriver: true,
+                    easing: Easing.linear,
                   }).start(() => {
                     imageOpacity.setValue(0);
                   });
@@ -221,7 +228,7 @@ const App = () => {
                 webviewRef.current?.reload();
                 setTimeout(() => {
                   setLoading(false);
-                }, 2000);
+                }, 3000);
               }}
             />
           </SafeAreaView>
