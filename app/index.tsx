@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import Loading from '../common/ui/Loading';
-import { usePathname, useRouter } from 'expo-router';
+import { useNavigation, usePathname, useRouter } from 'expo-router';
 import useAuthContext from '../auth/useAuthContext';
 import { useGetMemberId } from '../auth/api/login';
+import webviewStore from '../common/state/webview';
+import { navigationRef } from './_layout';
 
 const index = () => {
   const { user } = useAuthContext();
@@ -17,7 +19,13 @@ const index = () => {
     token: user?.token,
   });
 
+  const { mode } = webviewStore();
+
   useEffect(() => {
+    if (mode === 'BOOKMARK') {
+      router.push('bookmarkWebview');
+      return;
+    }
     if (user && !user.token) {
       router.push('login');
       return;
@@ -25,7 +33,7 @@ const index = () => {
     if (serverMemberId) {
       router.push('initialWebview');
     }
-  }, [serverMemberId, router, user]);
+  }, [serverMemberId, router, user, navigationRef]);
 
   return <Loading />;
 };
