@@ -69,7 +69,7 @@ const webviewURL: Record<MODE, (id?: number) => string> = {
 const windowWidth = Dimensions.get('window').width;
 
 const App = () => {
-  const [snapshotUri, setSnapshotUri] = useState<string>('');
+  // const [snapshotUri, setSnapshotUri] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [isGoingBack, setIsGoingBack] = useState(false); // 뒤로 가기 상태 관리
   const [noAnimation, setNoAnimation] = useState(false);
@@ -97,7 +97,7 @@ const App = () => {
 
   const handleNavigationStateChange = async (navState: WebViewNavigation) => {
     const url = navState.url;
-    if (!isGoingBack) captureScreenFn(setSnapshotUri);
+    // if (!isGoingBack) captureScreenFn(setSnapshotUri);
     if (noAnimation) return;
 
     if (EXPLICIT_URL.includes(url) && !isGoingBack) {
@@ -173,7 +173,7 @@ const App = () => {
       requestUserPermission();
     }
     if (data.message === 'goBack') {
-      captureScreenFn(setSnapshotUri);
+      // captureScreenFn(setSnapshotUri);
       setIsGoingBack(true);
     }
     if (data.message === 'signUp') {
@@ -298,13 +298,13 @@ const styles = StyleSheet.create({
 
 export default App;
 
-const captureScreenFn = async (
-  setSnapShotUri: Dispatch<SetStateAction<string>>,
-) => {
-  captureScreen({
-    format: 'png',
-    quality: 0.1,
-    handleGLSurfaceViewOnAndroid: true,
-    fileName: 'screenshot',
-  }).then((uri) => setSnapShotUri(uri));
-};
+// const captureScreenFn = async (
+//   setSnapShotUri: Dispatch<SetStateAction<string>>,
+// ) => {
+//   captureScreen({
+//     format: 'png',
+//     quality: 0.1,
+//     handleGLSurfaceViewOnAndroid: true,
+//     fileName: 'screenshot',
+//   }).then((uri) => setSnapShotUri(uri));
+// };
