@@ -105,8 +105,8 @@ const App = () => {
       requestAnimationFrame(() => {
         Animated.timing(animationValue, {
           toValue: 0,
-          duration: 250,
-          easing: Easing.linear,
+          duration: 400,
+          easing: Easing.out(Easing.poly(3)),
           useNativeDriver: true,
         }).start(() => {
           setIsGoingBack(false);
@@ -122,8 +122,8 @@ const App = () => {
       requestAnimationFrame(() => {
         Animated.timing(animationValue, {
           toValue: 0,
-          duration: 250,
-          easing: Easing.linear,
+          duration: 400,
+          easing: Easing.out(Easing.poly(3)),
           useNativeDriver: true,
         }).start(() => {
           setIsGoingBack(false);
@@ -136,14 +136,14 @@ const App = () => {
 
   // 뒤로 가기 상태가 변경되면 애니메이션 업데이트
   useEffect(() => {
-    snapShotAnimationValue.setValue(windowWidth / 2 + 40);
+    snapShotAnimationValue.setValue(windowWidth / 3);
 
     requestAnimationFrame(() => {
       Animated.timing(snapShotAnimationValue, {
         toValue: windowWidth,
-        duration: 250,
+        duration: 400,
         useNativeDriver: true,
-        easing: Easing.linear,
+        easing: Easing.out(Easing.poly(3)),
       }).start(() => {
         setIsGoingBack(false);
       });
@@ -198,12 +198,12 @@ const App = () => {
       <View style={styles.container}>
         {/* 스냅샷 */}
 
-        {snapshotUri && (
+        {/* {snapshotUri && (
           <Animated.View
-            shouldRasterizeIOS={true}
             style={[
               styles.container,
               {
+                zIndex: 0,
                 opacity: imageOpacity,
                 transform: [
                   {
@@ -218,26 +218,25 @@ const App = () => {
                 requestAnimationFrame(() => {
                   Animated.timing(imageOpacity, {
                     toValue: 1,
-                    duration: 250,
+                    duration: 400,
                     useNativeDriver: true,
-                    easing: Easing.linear,
                   }).start(() => {
                     imageOpacity.setValue(0);
                   });
                 });
               }}
-              style={styles.fullImage}
+              style={[styles.fullImage]}
               source={{ uri: snapshotUri }}
             />
           </Animated.View>
-        )}
+        )} */}
 
         {/* 기존 WebView */}
         <Animated.View
-          shouldRasterizeIOS={true}
           style={[
             styles.container,
             {
+              zIndex: 1,
               transform: [
                 {
                   translateX: animationValue,
@@ -262,7 +261,7 @@ const App = () => {
                 webviewRef.current?.reload();
                 setTimeout(() => {
                   setLoading(false);
-                }, 2500);
+                }, 3000);
               }}
             />
           </SafeAreaView>
@@ -304,7 +303,7 @@ const captureScreenFn = async (
 ) => {
   captureScreen({
     format: 'png',
-    quality: 0,
+    quality: 0.1,
     handleGLSurfaceViewOnAndroid: true,
     fileName: 'screenshot',
   }).then((uri) => setSnapShotUri(uri));
