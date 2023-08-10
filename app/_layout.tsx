@@ -1,18 +1,18 @@
+import messaging from '@react-native-firebase/messaging';
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
   createNavigationContainerRef,
 } from '@react-navigation/native';
-import { SplashScreen, Stack, useNavigation, useRouter } from 'expo-router';
-import { BackHandler, useColorScheme } from 'react-native';
-import useSettingFont from '../common/hooks/useSettingFont';
-import { AuthProvider } from '../auth/AuthContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import messaging from '@react-native-firebase/messaging';
-import { useEffect } from 'react';
 import * as Clipboard from 'expo-clipboard';
-import webviewStore from '../common/state/webview';
+import { SplashScreen, Stack } from 'expo-router';
+import { useEffect } from 'react';
+import { BackHandler, useColorScheme } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { AuthProvider } from '../auth/AuthContext';
+import useSettingFont from '../common/hooks/useSettingFont';
 
 // Register background handler
 messaging().setBackgroundMessageHandler(async (remoteMessage) => {
@@ -31,10 +31,7 @@ interface NavigationParams {
 
 export const navigationRef = createNavigationContainerRef<NavigationParams>();
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
+export { ErrorBoundary } from 'expo-router';
 
 export default function RootLayout() {
   const { loaded } = useSettingFont();
@@ -78,32 +75,34 @@ function RootLayoutNav() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <ThemeProvider
-          value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-        >
-          <Stack screenOptions={{ headerShown: false, animation: 'none' }}>
-            <Stack.Screen
-              name="index"
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="login"
-              options={{
-                animation: 'flip',
-              }}
-            />
-            <Stack.Screen
-              name="initialWebview"
-              options={{ animation: 'none' }}
-            />
-            <Stack.Screen
-              name="bookmarkWebview"
-              options={{ animation: 'flip' }}
-            />
-          </Stack>
-        </ThemeProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <ThemeProvider
+            value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+          >
+            <Stack screenOptions={{ headerShown: false, animation: 'none' }}>
+              <Stack.Screen
+                name="index"
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="login"
+                options={{
+                  animation: 'flip',
+                }}
+              />
+              <Stack.Screen
+                name="initialWebview"
+                options={{ animation: 'none' }}
+              />
+              <Stack.Screen
+                name="bookmarkWebview"
+                options={{ animation: 'flip' }}
+              />
+            </Stack>
+          </ThemeProvider>
+        </GestureHandlerRootView>
       </AuthProvider>
     </QueryClientProvider>
   );
