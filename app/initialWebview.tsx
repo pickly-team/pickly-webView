@@ -129,8 +129,6 @@ const App = () => {
           setIsGoingBack(false);
         });
       });
-
-      webviewBridge(webviewRef, 'initialize', null)();
     }
   };
 
