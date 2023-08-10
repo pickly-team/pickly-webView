@@ -105,7 +105,7 @@ const App = () => {
       requestAnimationFrame(() => {
         Animated.timing(animationValue, {
           toValue: 0,
-          duration: 400,
+          duration: 500,
           easing: Easing.out(Easing.poly(3)),
           useNativeDriver: true,
         }).start(() => {
@@ -122,7 +122,7 @@ const App = () => {
       requestAnimationFrame(() => {
         Animated.timing(animationValue, {
           toValue: 0,
-          duration: 400,
+          duration: 500,
           easing: Easing.out(Easing.poly(3)),
           useNativeDriver: true,
         }).start(() => {
@@ -139,7 +139,7 @@ const App = () => {
     requestAnimationFrame(() => {
       Animated.timing(snapShotAnimationValue, {
         toValue: windowWidth,
-        duration: 400,
+        duration: 500,
         useNativeDriver: true,
         easing: Easing.out(Easing.poly(3)),
       }).start(() => {
@@ -216,7 +216,7 @@ const App = () => {
                 requestAnimationFrame(() => {
                   Animated.timing(imageOpacity, {
                     toValue: 1,
-                    duration: 400,
+                    duration: 500,
                     useNativeDriver: true,
                   }).start(() => {
                     imageOpacity.setValue(0);
