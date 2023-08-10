@@ -1,18 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import Colors from '../constants/Colors';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import WebView from 'react-native-webview';
-import Header from '../common/ui/Header';
-import webviewStore from '../common/state/webview';
-import { navigationRef } from './_layout';
 import { useNavigation, useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import {
   Directions,
-  FlingGestureHandler,
   Gesture,
   GestureDetector,
 } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import WebView from 'react-native-webview';
+import webviewStore from '../common/state/webview';
+import Header from '../common/ui/Header';
+import Colors from '../constants/Colors';
 
 const bookmarkWebview = () => {
   const { setMode, url } = webviewStore();
@@ -65,9 +63,6 @@ const bookmarkWebview = () => {
                 uri: url,
               }}
               allowsBackForwardNavigationGestures={true}
-              // onNavigationStateChange={(e) => {
-              //   console.log(e);
-              // }}
             />
           )}
         </SafeAreaView>
