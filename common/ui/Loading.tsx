@@ -1,8 +1,8 @@
 import React from 'react';
 import { Image, SafeAreaView, StyleSheet } from 'react-native';
+import LogoImage from '../../assets/images/splash.png';
 import { View } from '../../components/Themed';
 import Colors from '../../constants/Colors';
-import LogoImage from '../../assets/images/splash.png';
 
 const Loading = () => {
   return (
@@ -21,7 +21,7 @@ const Styles = StyleSheet.create({
     width: '100%',
     height: '100%',
 
-    backgroundColor: Colors.dark.logoGreen,
+    backgroundColor: Colors.dark.lightPrimary,
     zIndex: 10,
   },
   container: {
@@ -29,7 +29,7 @@ const Styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.dark.logoGreen,
+    backgroundColor: Colors.dark.lightPrimary,
   },
   img: {
     width: '100%',
