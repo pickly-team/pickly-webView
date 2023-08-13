@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import Constants from 'expo-constants';
-import { useRouter } from 'expo-router';
-import React, { useRef, useState } from 'react';
+import { useNavigation, useRouter } from 'expo-router';
+import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Dimensions, Easing, StyleSheet, View } from 'react-native';
 import {
   Directions,
@@ -63,6 +63,8 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [isGoingBack, setIsGoingBack] = useState(false); // 뒤로 가기 상태 관리
   const [noAnimation, setNoAnimation] = useState(false);
+  const [animationStarted, setAnimationStarted] = useState(false);
+  const [currentUrl, setCurrentUrl] = useState('');
 
   const animationValue = useRef(new Animated.Value(windowWidth)).current;
   const snapShotAnimationValue = useRef(new Animated.Value(0)).current;
@@ -70,6 +72,13 @@ const App = () => {
 
   const { user } = useAuthContext();
   const [mode, setMode] = useState<MODE>('SIGN_UP');
+
+  const navigator = useNavigation();
+  useEffect(() => {
+    navigator.setOptions({
+      gestureEnabled: false,
+    });
+  }, []);
 
   // 1. 유저 로그인
   // 1.1 유저가 로그인 되어있는지 확인
@@ -86,34 +95,23 @@ const App = () => {
 
   const flingGesture = Gesture.Fling()
     .direction(Directions.RIGHT)
-    .onStart(() => {
+    .onEnd(() => {
+      setIsGoingBack(true);
+      setAnimationStarted(true);
       webviewRef.current?.goBack();
-      animationValue.setValue(-windowWidth / 2);
-
-      requestAnimationFrame(() => {
-        Animated.timing(animationValue, {
-          toValue: 0,
-          duration: 200,
-          easing: Easing.out(Easing.poly(3)),
-          useNativeDriver: true,
-        }).start(() => {
-          setIsGoingBack(false);
-        });
-      });
     });
 
   const handleNavigationStateChange = async (navState: WebViewNavigation) => {
     const url = navState.url;
-
+    setCurrentUrl(url);
     if (noAnimation) return;
-
     if (EXPLICIT_URL.includes(url) && !isGoingBack) {
       if (isInitialized) return;
       requestAnimationFrame(() => {
         Animated.timing(animationValue, {
           toValue: 0,
-          duration: 500,
-          easing: Easing.out(Easing.poly(3)),
+          duration: 350,
+          easing: Easing.out(Easing.poly(2)),
           useNativeDriver: true,
         }).start(() => {
           setIsGoingBack(false);
@@ -122,22 +120,27 @@ const App = () => {
       });
     }
 
-    if (url) {
-      snapShotAnimationValue.setValue(0);
-      animationValue.setValue(isGoingBack ? -windowWidth / 2 : windowWidth);
-
-      requestAnimationFrame(() => {
-        Animated.timing(animationValue, {
-          toValue: 0,
-          duration: 500,
-          easing: Easing.out(Easing.poly(3)),
-          useNativeDriver: true,
-        }).start(() => {
-          setIsGoingBack(false);
-        });
-      });
-    }
+    setAnimationStarted(true);
   };
+
+  useEffect(() => {
+    if (!animationStarted) return;
+    if (currentUrl === `${clientUrl}/`) return;
+    snapShotAnimationValue.setValue(0);
+    animationValue.setValue(isGoingBack ? -windowWidth / 2 : windowWidth);
+
+    requestAnimationFrame(() => {
+      Animated.timing(animationValue, {
+        toValue: 0,
+        duration: isGoingBack ? 150 : 300,
+        easing: Easing.out(Easing.poly(2)),
+        useNativeDriver: true,
+      }).start(() => {
+        setIsGoingBack(false);
+      });
+    });
+    setAnimationStarted(false);
+  }, [isGoingBack, animationStarted, currentUrl]);
 
   // 3. 알림 설정
   const { requestUserPermission } = useNotification({
@@ -184,8 +187,9 @@ const App = () => {
     <>
       {!!loading && <Loading />}
       <GestureDetector gesture={flingGesture}>
-        <View style={styles.container}>
+        <View shouldRasterizeIOS={true} style={styles.container}>
           <Animated.View
+            shouldRasterizeIOS={true}
             style={[
               styles.container,
               {
@@ -210,6 +214,10 @@ const App = () => {
                 onNavigationStateChange={handleNavigationStateChange}
                 allowsBackForwardNavigationGestures={true}
                 pullToRefreshEnabled={true}
+                automaticallyAdjustContentInsets={false}
+                allowsFullscreenVideo={true}
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
                 onContentProcessDidTerminate={() => {
                   setLoading(true);
                   webviewRef.current?.reload();
