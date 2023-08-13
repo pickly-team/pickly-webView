@@ -96,6 +96,7 @@ const App = () => {
   const flingGesture = Gesture.Fling()
     .direction(Directions.RIGHT)
     .onEnd(() => {
+      if (currentUrl === `${clientUrl}/`) return;
       setIsGoingBack(true);
       setAnimationStarted(true);
       webviewRef.current?.goBack();
@@ -125,7 +126,7 @@ const App = () => {
 
   useEffect(() => {
     if (!animationStarted) return;
-    if (currentUrl === `${clientUrl}/`) return;
+
     snapShotAnimationValue.setValue(0);
     animationValue.setValue(isGoingBack ? -windowWidth / 2 : windowWidth);
 
