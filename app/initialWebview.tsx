@@ -8,6 +8,7 @@ import {
   Gesture,
   GestureDetector,
 } from 'react-native-gesture-handler';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   WebView,
@@ -36,6 +37,8 @@ export interface PostBridgeParams {
   visitBookmark: {
     url: string;
   };
+  /** 진동 */
+  vibrate: null;
 }
 
 interface WebviewOnMessage {
@@ -177,6 +180,12 @@ const App = () => {
       setNoAnimation(true);
       setUrl(data.params?.url ?? '');
       navigationRef.current?.isReady && router.push('webview');
+    }
+    if (data.message === 'vibrate') {
+      ReactNativeHapticFeedback.trigger('soft', {
+        enableVibrateFallback: true,
+        ignoreAndroidSystemSettings: false,
+      });
     }
   };
 
