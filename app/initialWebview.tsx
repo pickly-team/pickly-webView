@@ -2,7 +2,14 @@ import auth from '@react-native-firebase/auth';
 import Constants from 'expo-constants';
 import { useNavigation, useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Dimensions, Easing, StyleSheet, View } from 'react-native';
+import {
+  Animated,
+  Dimensions,
+  Easing,
+  InteractionManager,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {
   Directions,
   Gesture,
@@ -71,6 +78,8 @@ const App = () => {
 
   const animationValue = useRef(new Animated.Value(windowWidth)).current;
   const snapShotAnimationValue = useRef(new Animated.Value(0)).current;
+  const backgroundOpacityValue = useRef(new Animated.Value(1)).current;
+  const webviewOpacityValue = useRef(new Animated.Value(0)).current;
   const [isInitialized, setIsInitialized] = useState(false);
 
   const { user } = useAuthContext();
@@ -132,18 +141,33 @@ const App = () => {
 
     snapShotAnimationValue.setValue(0);
     animationValue.setValue(isGoingBack ? -windowWidth / 2 : windowWidth);
+    backgroundOpacityValue.setValue(1);
+    webviewOpacityValue.setValue(0);
 
     requestAnimationFrame(() => {
       Animated.timing(animationValue, {
         toValue: 0,
-        duration: isGoingBack ? 150 : 300,
-        easing: Easing.out(Easing.poly(2)),
+        duration: isGoingBack ? 350 : 350,
         useNativeDriver: true,
       }).start(() => {
-        setIsGoingBack(false);
+        setAnimationStarted(false);
       });
     });
-    setAnimationStarted(false);
+    InteractionManager.runAfterInteractions(() => {
+      setIsGoingBack(false);
+    });
+
+    Animated.timing(backgroundOpacityValue, {
+      toValue: 0,
+      duration: 350,
+      useNativeDriver: true,
+    }).start();
+
+    Animated.timing(webviewOpacityValue, {
+      toValue: 1,
+      duration: 350,
+      useNativeDriver: true,
+    }).start();
   }, [isGoingBack, animationStarted, currentUrl]);
 
   // 3. 알림 설정
@@ -198,12 +222,13 @@ const App = () => {
       {!!loading && <Loading />}
       <GestureDetector gesture={flingGesture}>
         <View shouldRasterizeIOS={true} style={styles.container}>
-          <Animated.View
-            shouldRasterizeIOS={true}
+          {/* <Animated.View
             style={[
+              styles.fullBlackView,
               styles.container,
               {
-                zIndex: 1,
+                zIndex: 2,
+                opacity: backgroundOpacityValue,
                 transform: [
                   {
                     translateX: animationValue,
@@ -211,8 +236,18 @@ const App = () => {
                 ],
               },
             ]}
+          /> */}
+          <Animated.View
+            shouldRasterizeIOS={true}
+            style={[
+              styles.container,
+              {
+                zIndex: 2,
+                opacity: webviewOpacityValue,
+              },
+            ]}
           >
-            <SafeAreaView style={styles.safeArea}>
+            <SafeAreaView shouldRasterizeIOS={true} style={styles.safeArea}>
               <WebView
                 ref={webviewRef}
                 source={{
@@ -259,11 +294,12 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
   },
-  fullImage: {
-    zIndex: 0,
+  fullBlackView: {
+    zIndex: 1,
+    backgroundColor: Colors.dark.background,
     position: 'absolute',
-    height: '100%',
     width: '100%',
+    height: '100%',
     top: 0,
     left: 0,
   },
