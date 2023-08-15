@@ -2,12 +2,12 @@ require('dotenv/config');
 
 export default {
   expo: {
-    name: 'pickly-app',
+    name: 'pickly',
     slug: 'pickly',
     version: '1.0.0',
     orientation: 'portrait',
     icon: './assets/images/icon.png',
-    scheme: 'pickly-app',
+    scheme: 'pickly',
     userInterfaceStyle: 'automatic',
     splash: {
       image: './assets/images/splash.png',
