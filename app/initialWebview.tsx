@@ -1,5 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import Constants from 'expo-constants';
+import * as MailComposer from 'expo-mail-composer';
 import { useNavigation, useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import {
@@ -46,6 +47,8 @@ export interface PostBridgeParams {
   };
   /** 진동 */
   vibrate: null;
+  /** 이메일 */
+  email: null;
 }
 
 interface WebviewOnMessage {
@@ -209,6 +212,12 @@ const App = () => {
       ReactNativeHapticFeedback.trigger('soft', {
         enableVibrateFallback: true,
         ignoreAndroidSystemSettings: false,
+      });
+    }
+    if (data.message === 'email') {
+      MailComposer.composeAsync({
+        recipients: ['pickly.bookmark@gmail.com'],
+        subject: '피클리에게 문의하기',
       });
     }
   };
