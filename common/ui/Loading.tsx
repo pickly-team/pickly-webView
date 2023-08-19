@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, SafeAreaView, StyleSheet } from 'react-native';
+import { Image, SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 import LogoImage from '../../assets/images/splash.png';
 import { View } from '../../components/Themed';
 import Colors from '../../constants/Colors';
@@ -7,6 +7,7 @@ import Colors from '../../constants/Colors';
 const Loading = () => {
   return (
     <SafeAreaView style={Styles.safeArea}>
+      <StatusBar barStyle="light-content" />
       <View style={Styles.container}>
         <Image style={Styles.img} source={LogoImage} />
       </View>
@@ -18,9 +19,7 @@ export default Loading;
 
 const Styles = StyleSheet.create({
   safeArea: {
-    width: '100%',
-    height: '100%',
-
+    flex: 1,
     backgroundColor: Colors.dark.lightPrimary,
     zIndex: 10,
   },
