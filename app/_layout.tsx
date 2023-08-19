@@ -100,6 +100,7 @@ function RootLayoutNav() {
                 name="bookmarkWebview"
                 options={{ animation: 'flip' }}
               />
+              <Stack.Screen name="email" options={{ animation: 'flip' }} />
             </Stack>
           </ThemeProvider>
         </GestureHandlerRootView>
