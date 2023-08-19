@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     columnGap: 5,
   },
   greenButtonStyle: {
-    backgroundColor: Colors.dark.primary,
+    backgroundColor: Colors.dark.lightPrimary,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
