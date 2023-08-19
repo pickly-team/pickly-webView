@@ -1,9 +1,9 @@
-import { ReactNode } from 'react';
-import { Text, View } from '../../components/Themed';
-import { useRouter } from 'expo-router';
-import { StyleSheet } from 'react-native';
-import Colors from '../../constants/Colors';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import { ReactNode } from 'react';
+import { StyleSheet } from 'react-native';
+import { Text, View } from '../../components/Themed';
+import Colors from '../../constants/Colors';
 
 interface HeaderProps {
   showBackButton?: boolean;
@@ -25,22 +25,20 @@ const Header = ({
     backButtonCallback && backButtonCallback();
   };
   return (
-    <>
-      <View style={styles.headerContainer}>
-        <View style={styles.backButtonAndTitleWrapper}>
-          {showBackButton && (
-            <MaterialIcons
-              name="arrow-back"
-              size={24}
-              color="white"
-              onPress={onClickBackButton}
-            />
-          )}
-          {title && <Text>{title}</Text>}
-        </View>
-        <View style={styles.rightButtonWrapper}>{rightButton}</View>
+    <View style={styles.headerContainer}>
+      <View style={styles.backButtonAndTitleWrapper}>
+        {showBackButton && (
+          <MaterialIcons
+            name="arrow-back"
+            size={24}
+            color="white"
+            onPress={onClickBackButton}
+          />
+        )}
+        {title && <Text>{title}</Text>}
       </View>
-    </>
+      <View style={styles.rightButtonWrapper}>{rightButton}</View>
+    </View>
   );
 };
 
@@ -48,7 +46,7 @@ export default Header;
 
 const styles = StyleSheet.create({
   headerContainer: {
-    top: 0,
+    top: -11,
     left: 0,
     backgroundColor: Colors.dark.background,
     paddingLeft: 20,
@@ -63,7 +61,7 @@ const styles = StyleSheet.create({
   },
   backButtonAndTitleWrapper: {
     display: 'flex',
-    columnGap: 16,
+
     height: 56,
     alignItems: 'center',
 
