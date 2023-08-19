@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Constants from 'expo-constants';
-import client from '../../lib/client';
 import { MODE } from '../../app/initialWebview';
+import client from '../../lib/client';
 export interface Json {
   email: string;
   isHardMode: boolean;
