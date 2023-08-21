@@ -1,13 +1,16 @@
 import appleAuth from '@invertase/react-native-apple-authentication';
 import auth from '@react-native-firebase/auth';
+import useUserStore from '../common/state/user';
 import useSignInUser from './useSignInUser';
 
 const useGetAppleAuth = () => {
   const { signInUser } = useSignInUser();
+  const { setName } = useUserStore();
+
   const signInWithApple = async () => {
     // Start the sign-in request
     const appleAuthRequestResponse = await appleAuth.performRequest({
-      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedOperation: appleAuth.Operation.REFRESH,
       requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
     });
 
@@ -17,11 +20,15 @@ const useGetAppleAuth = () => {
     }
 
     // Create a Firebase credential from the response
-    const { identityToken, nonce } = appleAuthRequestResponse;
+    const { identityToken, nonce, fullName } = appleAuthRequestResponse;
     const appleCredential = auth.AppleAuthProvider.credential(
       identityToken,
       nonce,
     );
+
+    if (fullName?.givenName && fullName?.familyName) {
+      setName(`${fullName?.givenName}${fullName?.familyName}`);
+    }
 
     // Sign the user in with the credential
     return auth()

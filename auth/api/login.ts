@@ -87,11 +87,11 @@ const getUserInfo = async ({ loginId, token }: GETUserInfoRequest) => {
 
 export interface GETUserInfoQueryParams {
   loginId: number;
-  setMode: (mode: MODE) => void;
+  setMode?: (mode: MODE) => void;
   token?: string;
 }
 
-const GET_MEMBER_INFO_KEY = (params: GETUserInfoQueryParams) => [
+export const GET_MEMBER_INFO_KEY = (params: GETUserInfoQueryParams) => [
   'GET_MEMBER_INFO',
   params.loginId,
 ];
@@ -103,11 +103,11 @@ export const useGETMemberInfo = (params: GETUserInfoQueryParams) => {
     {
       enabled: params.loginId !== 0,
       onSuccess: (data) => {
-        if (data.nickname) params.setMode('SIGN_IN');
+        if (data.nickname) params.setMode && params.setMode('SIGN_IN');
       },
       onError: (error) => {
         console.log('error:', error);
-        params.setMode('SIGN_UP');
+        params.setMode && params.setMode('SIGN_UP');
       },
     },
   );
