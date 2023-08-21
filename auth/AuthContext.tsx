@@ -12,6 +12,8 @@ import useUserStore from '../common/state/user';
 import { useGetMemberId } from './api/login';
 import { usePutUserInfoQuery } from './api/user';
 
+const PREFIX = '-+@*' as const;
+
 export type ActionMapType<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
     ? {
@@ -120,7 +122,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           memberId: serverMemberId,
           putData: {
             name,
-            nickname: name.slice(0, 3) + '-+@',
+            nickname: PREFIX + generateRandomString(3),
             profileEmoji: '🐶',
           },
           token: token,
@@ -185,3 +187,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
     </AuthContext.Provider>
   );
 }
+
+const generateRandomString = (num: number) => {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  let result = '';
+  const charactersLength = characters.length;
+  for (let i = 0; i < num; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+
+  return result;
+};
