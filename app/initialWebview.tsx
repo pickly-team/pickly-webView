@@ -8,6 +8,7 @@ import {
   Dimensions,
   Easing,
   InteractionManager,
+  StatusBar,
   StyleSheet,
   View,
 } from 'react-native';
@@ -257,6 +258,7 @@ const App = () => {
             ]}
           >
             <SafeAreaView shouldRasterizeIOS={true} style={styles.safeArea}>
+              <StatusBar barStyle="light-content" />
               <WebView
                 ref={webviewRef}
                 source={{

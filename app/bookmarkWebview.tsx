@@ -1,6 +1,6 @@
 import { useNavigation, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import {
   Directions,
   Gesture,
@@ -44,6 +44,7 @@ const bookmarkWebview = () => {
     <>
       <GestureDetector gesture={flingGesture}>
         <SafeAreaView style={styles.safeArea}>
+          <StatusBar barStyle="light-content" />
           <Header showBackButton backButtonCallback={onClickBackButton} />
           {loading && (
             <View

@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
 import messaging from '@react-native-firebase/messaging';
-import { Alert, Platform } from 'react-native';
-import { PermissionsAndroid } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Alert, PermissionsAndroid, Platform } from 'react-native';
 import { usePUTNotificationSettingQuery } from '../api/notification';
 
 interface Props {

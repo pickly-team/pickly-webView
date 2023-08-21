@@ -1,9 +1,9 @@
+import { usePathname, useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
-import Loading from '../common/ui/Loading';
-import { useNavigation, usePathname, useRouter } from 'expo-router';
-import useAuthContext from '../auth/useAuthContext';
 import { useGetMemberId } from '../auth/api/login';
+import useAuthContext from '../auth/useAuthContext';
 import webviewStore from '../common/state/webview';
+import Loading from '../common/ui/Loading';
 import { navigationRef } from './_layout';
 
 const index = () => {
@@ -22,6 +22,9 @@ const index = () => {
   const { mode } = webviewStore();
 
   useEffect(() => {
+    if (mode === 'REGISTER') {
+      return;
+    }
     if (mode === 'BOOKMARK') {
       router.push('bookmarkWebview');
       return;
