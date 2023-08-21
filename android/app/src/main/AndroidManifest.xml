@@ -27,7 +27,7 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="pickly-app"/>
+        <data android:scheme="pickly"/>
         <data android:scheme="com.ww8007.pickly"/>
       </intent-filter>
     </activity>
