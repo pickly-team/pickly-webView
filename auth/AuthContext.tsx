@@ -1,14 +1,16 @@
+import auth from '@react-native-firebase/auth';
+import { useRouter } from 'expo-router';
 import {
   createContext,
-  useEffect,
-  useReducer,
   useCallback,
+  useEffect,
   useMemo,
+  useReducer,
   useState,
 } from 'react';
-import auth from '@react-native-firebase/auth';
+import useUserStore from '../common/state/user';
 import { useGetMemberId } from './api/login';
-import { useRouter } from 'expo-router';
+import { usePutUserInfoQuery } from './api/user';
 
 export type ActionMapType<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
@@ -21,7 +23,12 @@ export type ActionMapType<M extends { [index: string]: any }> = {
       };
 };
 
-export type AuthUserType = null | Record<string, any>;
+interface User {
+  token: string;
+  [key: string]: any;
+}
+
+export type AuthUserType = User | null;
 
 export type AuthStateType = {
   isInitialized: boolean;
@@ -30,7 +37,7 @@ export type AuthStateType = {
 
 export type Auth0ContextType = {
   isInitialized: boolean;
-  user: AuthUserType;
+  user: AuthUserType | null;
   logout: () => void;
 };
 
@@ -99,6 +106,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     token: token,
   });
 
+  const { mutate } = usePutUserInfoQuery({ memberId: serverMemberId ?? 0 });
+  const { name } = useUserStore();
   useEffect(() => {
     if (isGetMemberIdLoading) return;
     if (serverMemberId === undefined && isGetMemberIdError) {
@@ -106,6 +115,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
       return;
     }
     if (serverMemberId && state.user) {
+      if (name && serverMemberId) {
+        mutate({
+          memberId: serverMemberId,
+          putData: {
+            name,
+            nickname: name.slice(0, 3) + '-+@',
+            profileEmoji: '🐶',
+          },
+          token: token,
+        });
+      }
       router.push('initialWebview');
     }
   }, [serverMemberId, isGetMemberIdLoading, isGetMemberIdError, state]);
@@ -119,7 +139,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             user: {
               ...user,
               displayName: user?.displayName,
-              token: await user?.getIdToken(),
+              token: (await user?.getIdToken()) ?? '',
             },
           },
         });
