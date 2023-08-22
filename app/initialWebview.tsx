@@ -232,7 +232,9 @@ const App = () => {
   // 2. 웹뷰 로그인
   const webviewRef = useRef<WebView>(null);
 
-  const { shouldRefetch, setShouldRefetch } = useSharedData();
+  const { shouldRefetch, setShouldRefetch } = useSharedData(
+    String(serverMemberId) ?? '',
+  );
 
   useEffect(() => {
     if (shouldRefetch) {
