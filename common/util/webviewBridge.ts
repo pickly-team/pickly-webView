@@ -11,6 +11,8 @@ interface BridgeParams {
   };
   /** 초기화 */
   initialize: null;
+  /** refetch */
+  refetch: null;
 }
 
 export function webviewBridge<T extends keyof BridgeParams>(

@@ -26,6 +26,7 @@ import {
 } from 'react-native-webview';
 import { useGETMemberInfo, useGetMemberId } from '../auth/api/login';
 import useAuthContext from '../auth/useAuthContext';
+import useSharedData from '../common/hooks/useSharedData';
 import webviewStore from '../common/state/webview';
 import Loading from '../common/ui/Loading';
 import { webviewBridge } from '../common/util/webviewBridge';
@@ -50,6 +51,8 @@ export interface PostBridgeParams {
   vibrate: null;
   /** 이메일 */
   email: null;
+  /** 새로고침 */
+  refetch: null;
 }
 
 interface WebviewOnMessage {
@@ -221,10 +224,22 @@ const App = () => {
         subject: '피클리에게 문의하기',
       });
     }
+    if (data.message === 'refetch') {
+      setShouldRefetch(false);
+    }
   };
 
   // 2. 웹뷰 로그인
   const webviewRef = useRef<WebView>(null);
+
+  const { shouldRefetch, setShouldRefetch } = useSharedData();
+
+  useEffect(() => {
+    if (shouldRefetch) {
+      webviewBridge(webviewRef, 'refetch', null);
+    }
+  }, [shouldRefetch, setShouldRefetch]);
+
   if (isGetMemberIdLoading || isGetUserInfoLoading) return <Loading />;
 
   return (
@@ -232,21 +247,6 @@ const App = () => {
       {!!loading && <Loading />}
       <GestureDetector gesture={flingGesture}>
         <View shouldRasterizeIOS={true} style={styles.container}>
-          {/* <Animated.View
-            style={[
-              styles.fullBlackView,
-              styles.container,
-              {
-                zIndex: 2,
-                opacity: backgroundOpacityValue,
-                transform: [
-                  {
-                    translateX: animationValue,
-                  },
-                ],
-              },
-            ]}
-          /> */}
           <Animated.View
             shouldRasterizeIOS={true}
             style={[
