@@ -43,6 +43,16 @@
 				<string>com.googleusercontent.apps.425892645876-tm1fbt62bqajldeper8qsqqod74qti26</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.ww8007.pickly</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>picklyapp</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>12</string>
