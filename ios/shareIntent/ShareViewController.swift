@@ -28,7 +28,7 @@ enum Visibility: String, Encodable {
 
 
 class ShareViewController: UIViewController {
-  typealias CategoryTuple = (id: Int, emoji: String, name: String)
+  typealias CategoryTuple = (emoji: String, name: String, id: Int)
   var categories: [CategoryTuple] = []
   var selectedCategoryId: Int?
   var selectedVisibility: Visibility?
@@ -360,7 +360,7 @@ class ShareViewController: UIViewController {
           
           do {
               let decodedResponse = try JSONDecoder().decode([CategoryItem].self, from: data)
-              let fetchedCategories = decodedResponse.map { (id: $0.categoryId, emoji: $0.emoji, name: $0.name) }
+              let fetchedCategories = decodedResponse.map { (emoji: $0.emoji, name: $0.name, id: $0.categoryId) }
               
               DispatchQueue.main.async {
                   if let firstCategory = decodedResponse.first {
