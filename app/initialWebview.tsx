@@ -185,9 +185,9 @@ const App = () => {
   const onWebViewMessage = (event: WebViewMessageEvent) => {
     const data = JSON.parse(event.nativeEvent.data) as WebviewOnMessage;
     if (data.message === 'login') {
-      if (serverMemberId) {
+      if (serverMemberId && user) {
         webviewBridge(webviewRef, 'login', {
-          token: user?.token,
+          token: user.token,
           memberId: serverMemberId,
         })();
       }
