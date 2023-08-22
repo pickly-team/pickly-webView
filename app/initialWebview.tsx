@@ -236,7 +236,7 @@ const App = () => {
 
   useEffect(() => {
     if (shouldRefetch) {
-      webviewBridge(webviewRef, 'refetch', null);
+      webviewBridge(webviewRef, 'refetch', null)();
     }
   }, [shouldRefetch, setShouldRefetch]);
 
