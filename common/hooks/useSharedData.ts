@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { AppState, AppStateStatus, Alert, NativeModules } from 'react-native';
+import { AppState, AppStateStatus, NativeModules } from 'react-native';
 
 const useSharedData = (serverMemberId?: string) => {
   const { ShareModule } = NativeModules;
@@ -31,11 +31,7 @@ const useSharedData = (serverMemberId?: string) => {
 
   const checkSharedData = () => {
     ShareModule.receiveSharedData((error: string, data: string) => {
-      if (data) {
-        setShouldRefetch(true);
-      } else {
-        setShouldRefetch(false);
-      }
+      if (data) setShouldRefetch(true);
     });
   };
 
