@@ -1,4 +1,5 @@
 import appleAuth from '@invertase/react-native-apple-authentication';
+import analytics from '@react-native-firebase/analytics';
 import auth from '@react-native-firebase/auth';
 import useUserStore from '../common/state/user';
 import useSignInUser from './useSignInUser';
@@ -37,6 +38,9 @@ const useGetAppleAuth = () => {
         const { user } = res;
         const token = await user.getIdToken();
         signInUser(token);
+        await analytics().logLogin({
+          method: 'apple',
+        });
       });
   };
 

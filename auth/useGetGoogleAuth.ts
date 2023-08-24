@@ -1,3 +1,4 @@
+import analytics from '@react-native-firebase/analytics';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import Constants from 'expo-constants';
@@ -25,6 +26,9 @@ const useGetGoogleAuth = () => {
         const { user } = res;
         const token = await user.getIdToken();
         signInUser(token);
+        await analytics().logLogin({
+          method: 'google',
+        });
       });
   };
 
