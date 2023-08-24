@@ -13,6 +13,10 @@ interface BridgeParams {
   initialize: null;
   /** refetch */
   refetch: null;
+  /** android url 공유 */
+  androidShareUrl: {
+    url: string;
+  };
 }
 
 export function webviewBridge<T extends keyof BridgeParams>(

@@ -53,6 +53,8 @@ export interface PostBridgeParams {
   email: null;
   /** 새로고침 */
   refetch: null;
+  /** 안드로이드 공유 종료 */
+  androidSharedEnd: null;
 }
 
 interface WebviewOnMessage {
@@ -227,20 +229,31 @@ const App = () => {
     if (data.message === 'refetch') {
       setShouldRefetch(false);
     }
+    if (data.message === 'androidSharedEnd') {
+      clearSharedText();
+    }
   };
 
   // 2. 웹뷰 로그인
   const webviewRef = useRef<WebView>(null);
 
-  const { shouldRefetch, setShouldRefetch } = useSharedData(
-    String(serverMemberId) ?? '',
-  );
+  const { shouldRefetch, setShouldRefetch, sharedUrl, clearSharedText } =
+    useSharedData(String(serverMemberId) ?? '');
 
   useEffect(() => {
     if (shouldRefetch) {
       webviewBridge(webviewRef, 'refetch', null)();
     }
   }, [shouldRefetch, setShouldRefetch]);
+
+  useEffect(() => {
+    if (sharedUrl) {
+      webviewBridge(webviewRef, 'androidShareUrl', {
+        url: sharedUrl,
+      })();
+      clearSharedText();
+    }
+  }, [sharedUrl, clearSharedText]);
 
   if (isGetMemberIdLoading || isGetUserInfoLoading) return <Loading />;
 
