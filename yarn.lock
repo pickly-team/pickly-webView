@@ -1988,6 +1988,11 @@
     prompts "^2.4.0"
     semver "^6.3.0"
 
+"@react-native-firebase/analytics@^18.3.1":
+  version "18.3.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-18.3.1.tgz#f52bebb8c94647d5247a72b7f7c5b30c69018853"
+  integrity sha512-MoznQywthPGLqaiebsyXE45SFPMZrouDnBdmQ5PIjAgjD+f2SW9JogeebZ79zetXd64qMdXdGeYAPyLB3NUEbA==
+
 "@react-native-firebase/app@^18.3.0":
   version "18.3.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-18.3.0.tgz#8e19eb3f9e6d9596c1d0d904bca3a2effafe9d4f"
