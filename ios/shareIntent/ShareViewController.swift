@@ -130,7 +130,7 @@ class ShareViewController: UIViewController {
         let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 44))
         let navItem = UINavigationItem(title: "북마크 추가하기")
         
-        let sendButton = UIBarButtonItem(title: "전송하기", style: .plain, target: self, action: #selector(sendAction))
+        let sendButton = UIBarButtonItem(title: "추가하기", style: .plain, target: self, action: #selector(sendAction))
         let closeButton = UIBarButtonItem(title: "닫기", style: .plain, target: self, action: #selector(closeAction))
         
         navItem.leftBarButtonItem = closeButton
@@ -236,6 +236,7 @@ class ShareViewController: UIViewController {
 
             urlValueLabel.topAnchor.constraint(equalTo: urlLabel.bottomAnchor, constant: 10),
             urlValueLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            urlValueLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
 
             titleLabel.topAnchor.constraint(equalTo: urlValueLabel.bottomAnchor, constant: 30),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -296,14 +297,29 @@ class ShareViewController: UIViewController {
             }
 
             guard let data = data else {
+                // 북마크를 추가할 수 없는 경우
                 print("Invalid data")
                 return
             }
 
             if let title = String(data: data, encoding: .utf8) {
+              if (data.isEmpty) {
+                DispatchQueue.main.async {
+                    print("Decoding error: \(error)")
+                    let alert = UIAlertController(title: "알림", message: "앗! 추가할 수 없는 북마크에요", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                        self?.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+                    }))
+
+                    // 이 부분을 추가하여 알림을 표시합니다.
+                    self?.present(alert, animated: true, completion: nil)
+                }
+              } else {
                 DispatchQueue.main.async {
                     self?.titleTextField.text = title
                 }
+              }
+                
             } else {
                 print("Unable to decode title")
             }
@@ -425,7 +441,17 @@ class ShareViewController: UIViewController {
               sharedDefaults?.synchronize()
               self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
           } catch {
-              print("Decoding error: \(error)")
+              // 북마크를 추가할 수 없는 경우
+              DispatchQueue.main.async {
+                  print("Decoding error: \(error)")
+                  let alert = UIAlertController(title: "알림", message: "앗! 추가할 수 없는 북마크에요", preferredStyle: .alert)
+                  alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                      self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+                  }))
+
+                  // 이 부분을 추가하여 알림을 표시합니다.
+                  self.present(alert, animated: true, completion: nil)
+              }
           }
       }
       
