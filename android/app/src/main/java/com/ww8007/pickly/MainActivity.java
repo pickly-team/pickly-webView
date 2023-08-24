@@ -1,5 +1,6 @@
 package com.ww8007.pickly;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -64,5 +65,11 @@ public class MainActivity extends ReactActivity {
     // Use the default back button implementation on Android S
     // because it's doing more than {@link Activity#moveTaskToBack} in fact.
     super.invokeDefaultOnBackPressed();
+  }
+
+  @Override
+  public void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    setIntent(intent);
   }
 }
