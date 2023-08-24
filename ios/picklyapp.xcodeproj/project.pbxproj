@@ -12,11 +12,43 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
 		667EE6943D96445B9CCDE2D7 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = D310EEBAD3154E738A432857 /* noop-file.swift */; };
+		A214E8C22A9300FC00133C54 /* RCTShareModule.m in Sources */ = {isa = PBXBuildFile; fileRef = A214E8C12A9300FC00133C54 /* RCTShareModule.m */; };
 		A2206EE02A6AACD2009A0705 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A2206EDF2A6AACD2009A0705 /* GoogleService-Info.plist */; };
+		A2B7EC592A94582900CF0533 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7EC582A94582900CF0533 /* ShareViewController.swift */; };
+		A2B7EC5C2A94582900CF0533 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2B7EC5A2A94582900CF0533 /* MainInterface.storyboard */; };
+		A2B7EC602A94582900CF0533 /* ShareIntent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A2B7EC562A94582900CF0533 /* ShareIntent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A2B7EC662A946A4100CF0533 /* CategorySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7EC652A946A4100CF0533 /* CategorySelectionViewController.swift */; };
+		A2B7EC682A94712000CF0533 /* ScopeSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7EC672A94712000CF0533 /* ScopeSelectViewController.swift */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
+		B1938814C3502FF8BB568465 /* Pods_picklyapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CD12526FE08FAB990BCA5D /* Pods_picklyapp.framework */; };
+		B604B1889E60C04D5CC11C63 /* Pods_picklyapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CD12526FE08FAB990BCA5D /* Pods_picklyapp.framework */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		E5DAA6307D7B2DD3B402FE28 /* Pods_picklyapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CD12526FE08FAB990BCA5D /* Pods_picklyapp.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A2B7EC5E2A94582900CF0533 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A2B7EC552A94582900CF0533;
+			remoteInfo = ShareIntent;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A214E8892A92F1CD00133C54 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A2B7EC602A94582900CF0533 /* ShareIntent.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
@@ -29,7 +61,16 @@
 		6C2E3173556A471DD304B334 /* Pods-picklyapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-picklyapp.debug.xcconfig"; path = "Target Support Files/Pods-picklyapp/Pods-picklyapp.debug.xcconfig"; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-picklyapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-picklyapp.release.xcconfig"; path = "Target Support Files/Pods-picklyapp/Pods-picklyapp.release.xcconfig"; sourceTree = "<group>"; };
 		A0CD12526FE08FAB990BCA5D /* Pods_picklyapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_picklyapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A214E8C12A9300FC00133C54 /* RCTShareModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTShareModule.m; sourceTree = "<group>"; };
+		A214E8C32A93010800133C54 /* RCTShareModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTShareModule.h; sourceTree = "<group>"; };
 		A2206EDF2A6AACD2009A0705 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A2B7EC562A94582900CF0533 /* ShareIntent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareIntent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2B7EC582A94582900CF0533 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		A2B7EC5B2A94582900CF0533 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		A2B7EC5D2A94582900CF0533 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A2B7EC642A94584000CF0533 /* ShareIntent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareIntent.entitlements; sourceTree = "<group>"; };
+		A2B7EC652A946A4100CF0533 /* CategorySelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategorySelectionViewController.swift; path = shareIntent/CategorySelectionViewController.swift; sourceTree = SOURCE_ROOT; };
+		A2B7EC672A94712000CF0533 /* ScopeSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScopeSelectViewController.swift; path = shareIntent/ScopeSelectViewController.swift; sourceTree = SOURCE_ROOT; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = picklyapp/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		D310EEBAD3154E738A432857 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "picklyapp/noop-file.swift"; sourceTree = "<group>"; };
@@ -43,6 +84,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5DAA6307D7B2DD3B402FE28 /* Pods_picklyapp.framework in Frameworks */,
+				B1938814C3502FF8BB568465 /* Pods_picklyapp.framework in Frameworks */,
+				B604B1889E60C04D5CC11C63 /* Pods_picklyapp.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A2B7EC532A94582900CF0533 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +109,8 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				A214E8C12A9300FC00133C54 /* RCTShareModule.m */,
+				A214E8C32A93010800133C54 /* RCTShareModule.h */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
 				D310EEBAD3154E738A432857 /* noop-file.swift */,
 			);
@@ -87,6 +139,7 @@
 				A2206EDF2A6AACD2009A0705 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* picklyapp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
+				A2B7EC572A94582900CF0533 /* ShareIntent */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D65327D7A22EEC0BE12398D9 /* Pods */,
@@ -101,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* picklyapp.app */,
+				A2B7EC562A94582900CF0533 /* ShareIntent.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -111,6 +165,19 @@
 				FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */,
 			);
 			name = picklyapp;
+			sourceTree = "<group>";
+		};
+		A2B7EC572A94582900CF0533 /* ShareIntent */ = {
+			isa = PBXGroup;
+			children = (
+				A2B7EC642A94584000CF0533 /* ShareIntent.entitlements */,
+				A2B7EC582A94582900CF0533 /* ShareViewController.swift */,
+				A2B7EC652A946A4100CF0533 /* CategorySelectionViewController.swift */,
+				A2B7EC672A94712000CF0533 /* ScopeSelectViewController.swift */,
+				A2B7EC5A2A94582900CF0533 /* MainInterface.storyboard */,
+				A2B7EC5D2A94582900CF0533 /* Info.plist */,
+			);
+			path = ShareIntent;
 			sourceTree = "<group>";
 		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
@@ -155,15 +222,34 @@
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
 				4022256515D1A6DCF9CB8C32 /* [CP-User] [RNFB] Core Configuration */,
 				35A01DCBE88D4153425D49DD /* [CP] Embed Pods Frameworks */,
+				A214E8892A92F1CD00133C54 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A2B7EC5F2A94582900CF0533 /* PBXTargetDependency */,
 			);
 			name = picklyapp;
 			productName = picklyapp;
 			productReference = 13B07F961A680F5B00A75B9A /* picklyapp.app */;
 			productType = "com.apple.product-type.application";
+		};
+		A2B7EC552A94582900CF0533 /* ShareIntent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A2B7EC612A94582900CF0533 /* Build configuration list for PBXNativeTarget "ShareIntent" */;
+			buildPhases = (
+				A2B7EC522A94582900CF0533 /* Sources */,
+				A2B7EC532A94582900CF0533 /* Frameworks */,
+				A2B7EC542A94582900CF0533 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShareIntent;
+			productName = ShareIntent;
+			productReference = A2B7EC562A94582900CF0533 /* ShareIntent.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -171,11 +257,17 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 47QGMGVGKG;
 						LastSwiftMigration = 1250;
+						ProvisioningStyle = Automatic;
+					};
+					A2B7EC552A94582900CF0533 = {
+						CreatedOnToolsVersion = 14.3.1;
+						DevelopmentTeam = 47QGMGVGKG;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -194,6 +286,7 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* picklyapp */,
+				A2B7EC552A94582900CF0533 /* ShareIntent */,
 			);
 		};
 /* End PBXProject section */
@@ -207,6 +300,14 @@
 				A2206EE02A6AACD2009A0705 /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A2B7EC542A94582900CF0533 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2B7EC5C2A94582900CF0533 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,19 +430,50 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				A214E8C22A9300FC00133C54 /* RCTShareModule.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
 				667EE6943D96445B9CCDE2D7 /* noop-file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A2B7EC522A94582900CF0533 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2B7EC662A946A4100CF0533 /* CategorySelectionViewController.swift in Sources */,
+				A2B7EC592A94582900CF0533 /* ShareViewController.swift in Sources */,
+				A2B7EC682A94712000CF0533 /* ScopeSelectViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A2B7EC5F2A94582900CF0533 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A2B7EC552A94582900CF0533 /* ShareIntent */;
+			targetProxy = A2B7EC5E2A94582900CF0533 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A2B7EC5A2A94582900CF0533 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A2B7EC5B2A94582900CF0533 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6C2E3173556A471DD304B334 /* Pods-picklyapp.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = picklyapp/picklyapp.entitlements;
@@ -380,6 +512,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7A4D352CD337FB3A3BF06240 /* Pods-picklyapp.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = picklyapp/picklyapp.entitlements;
@@ -517,6 +650,81 @@
 			};
 			name = Release;
 		};
+		A2B7EC622A94582900CF0533 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = ShareIntent/ShareIntent.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 47QGMGVGKG;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShareIntent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShareIntent;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ww8007.pickly.ShareIntent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A2B7EC632A94582900CF0533 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = ShareIntent/ShareIntent.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 47QGMGVGKG;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShareIntent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShareIntent;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ww8007.pickly.ShareIntent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -534,6 +742,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A2B7EC612A94582900CF0533 /* Build configuration list for PBXNativeTarget "ShareIntent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A2B7EC622A94582900CF0533 /* Debug */,
+				A2B7EC632A94582900CF0533 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

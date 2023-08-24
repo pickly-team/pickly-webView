@@ -11,7 +11,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>pickly-app</string>
+	<string>pickly</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -31,7 +31,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>pickly-app</string>
+				<string>pickly</string>
 				<string>com.ww8007.pickly</string>
 			</array>
 		</dict>
@@ -41,6 +41,16 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.425892645876-tm1fbt62bqajldeper8qsqqod74qti26</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.ww8007.pickly</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>picklyapp</string>
 			</array>
 		</dict>
 	</array>
@@ -92,6 +102,8 @@
 	<key>UIUserInterfaceStyle</key>
 	<string>Automatic</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 </dict>
 </plist>
