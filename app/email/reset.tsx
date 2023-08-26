@@ -6,7 +6,6 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   View,
@@ -18,6 +17,7 @@ import BottomFixedButton from '../../common/ui/BottomFixedButton';
 import Header from '../../common/ui/Header';
 import { Text } from '../../components/Themed';
 import Colors from '../../constants/Colors';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const reset = () => {
   const router = useRouter();
