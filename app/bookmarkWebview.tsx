@@ -53,6 +53,10 @@ const bookmarkWebview = () => {
     .direction(Directions.RIGHT)
     .onStart(() => {
       if (Platform.OS === 'android') return;
+      if (canGoBack) {
+        webviewRef.current?.goBack();
+        return;
+      }
       setWebviewOff(true);
       setMode('DEFAUlT');
       setTimeout(() => {
