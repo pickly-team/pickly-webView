@@ -46,7 +46,7 @@ export default Header;
 
 const styles = StyleSheet.create({
   headerContainer: {
-    top: -11,
+    top: 0,
     left: 0,
     backgroundColor: Colors.dark.background,
     paddingLeft: 20,
