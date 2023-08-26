@@ -6,11 +6,11 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import EmailAndPassword from '../../auth/ui/EmailAndPassword';
 import useSignInUser from '../../auth/useSignInUser';
 import useEmailStore from '../../common/state/email';

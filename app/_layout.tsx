@@ -8,8 +8,7 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import * as Clipboard from 'expo-clipboard';
 import { SplashScreen, Stack } from 'expo-router';
-import { useEffect } from 'react';
-import { BackHandler, useColorScheme } from 'react-native';
+import { Platform, useColorScheme } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AuthProvider } from '../auth/AuthContext';
 import useSettingFont from '../common/hooks/useSettingFont';
@@ -63,15 +62,6 @@ function RootLayoutNav() {
     },
   });
 
-  // 사용자의 뒤로가기 버튼을 제거
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      () => true,
-    );
-    return () => backHandler.remove();
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
@@ -98,7 +88,7 @@ function RootLayoutNav() {
               />
               <Stack.Screen
                 name="bookmarkWebview"
-                options={{ animation: 'flip' }}
+                options={{ animation: Platform.OS === 'ios' ? 'flip' : 'none' }}
               />
               <Stack.Screen name="email" options={{ animation: 'flip' }} />
             </Stack>

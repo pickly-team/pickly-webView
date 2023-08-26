@@ -19,48 +19,18 @@ import {
 } from 'react-native-gesture-handler';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {
-  WebView,
-  WebViewMessageEvent,
-  WebViewNavigation,
-} from 'react-native-webview';
+import { WebView, WebViewNavigation } from 'react-native-webview';
 import { useGETMemberInfo, useGetMemberId } from '../auth/api/login';
 import useAuthContext from '../auth/useAuthContext';
+import { useBackHandler } from '../common/hooks/useBackHandler';
 import useSharedData from '../common/hooks/useSharedData';
+import { useWebViewMessages } from '../common/hooks/useWebviewMessage';
 import webviewStore from '../common/state/webview';
 import Loading from '../common/ui/Loading';
 import { webviewBridge } from '../common/util/webviewBridge';
 import Colors from '../constants/Colors';
 import useNotification from '../notification/hooks/useNotification';
 import { navigationRef } from './_layout';
-
-export interface PostBridgeParams {
-  /** 웹뷰 로그인 */
-  login: null;
-  /** 알림 */
-  notification: null;
-  /** 페이지 뒤로 가기 */
-  goBack: null;
-  /** 회원가입 */
-  signUp: null;
-  /** 북마크 방문 */
-  visitBookmark: {
-    url: string;
-  };
-  /** 진동 */
-  vibrate: null;
-  /** 이메일 */
-  email: null;
-  /** 새로고침 */
-  refetch: null;
-  /** 안드로이드 공유 종료 */
-  androidSharedEnd: null;
-}
-
-interface WebviewOnMessage {
-  message: keyof PostBridgeParams;
-  params: PostBridgeParams[keyof PostBridgeParams];
-}
 
 export type MODE = 'SIGN_IN' | 'SIGN_UP';
 const clientUrl = Constants.expoConfig?.extra?.clientUrl || '';
@@ -94,12 +64,25 @@ const App = () => {
   const { user } = useAuthContext();
   const [mode, setMode] = useState<MODE>('SIGN_UP');
 
+  const webviewRef = useRef<WebView>(null);
+
   const navigator = useNavigation();
   useEffect(() => {
     navigator.setOptions({
       gestureEnabled: false,
     });
   }, []);
+
+  // 사용자의 뒤로가기 버튼을 제거
+  useBackHandler(() => {
+    if (webviewRef?.current) {
+      if (currentUrl === `${clientUrl}/`) return true;
+      setIsGoingBack(true);
+      setAnimationStarted(true);
+      webviewRef.current?.goBack();
+    }
+    return true;
+  });
 
   // 1. 유저 로그인
   // 1.1 유저가 로그인 되어있는지 확인
@@ -187,9 +170,12 @@ const App = () => {
   // 4. 웹뷰 메시지
   const router = useRouter();
   const { setMode: setWebviewMode, setUrl } = webviewStore();
-  const onWebViewMessage = (event: WebViewMessageEvent) => {
-    const data = JSON.parse(event.nativeEvent.data) as WebviewOnMessage;
-    if (data.message === 'login') {
+
+  const { shouldRefetch, setShouldRefetch, sharedUrl, clearSharedText } =
+    useSharedData(String(serverMemberId) ?? '');
+
+  const onWebViewMessage = useWebViewMessages({
+    onLogin: (data) => {
       if (serverMemberId && user) {
         webviewBridge(webviewRef, 'login', {
           token: user.token,
@@ -197,48 +183,35 @@ const App = () => {
         })();
       }
       setLoading(false);
-    }
-    if (data.message === 'notification') {
-      requestUserPermission();
-    }
-    if (data.message === 'goBack') {
-      setIsGoingBack(true);
-    }
-    if (data.message === 'signUp') {
-      auth().signOut();
-    }
-    setNoAnimation(false);
-    if (data.message === 'visitBookmark') {
+    },
+    onNotification: requestUserPermission,
+    onGoBack: () => setIsGoingBack(true),
+    onSignUp: () => auth().signOut(),
+    onVisitBookmark: (data) => {
       setWebviewMode('BOOKMARK');
       setNoAnimation(true);
-      setUrl(data.params?.url ?? '');
+      setUrl(data?.url ?? '');
       navigationRef.current?.isReady && router.push('webview');
-    }
-    if (data.message === 'vibrate') {
+    },
+    onVibrate: () => {
       ReactNativeHapticFeedback.trigger('soft', {
         enableVibrateFallback: true,
         ignoreAndroidSystemSettings: false,
       });
-    }
-    if (data.message === 'email') {
+    },
+    onEmail: () => {
       MailComposer.composeAsync({
         recipients: ['pickly.bookmark@gmail.com'],
         subject: '피클리에게 문의하기',
       });
-    }
-    if (data.message === 'refetch') {
+    },
+    onRefetch: () => {
       setShouldRefetch(false);
-    }
-    if (data.message === 'androidSharedEnd') {
-      clearSharedText();
-    }
-  };
+    },
+    onAndroidSharedEnd: clearSharedText,
+  });
 
   // 2. 웹뷰 로그인
-  const webviewRef = useRef<WebView>(null);
-
-  const { shouldRefetch, setShouldRefetch, sharedUrl, clearSharedText } =
-    useSharedData(String(serverMemberId) ?? '');
 
   useEffect(() => {
     if (shouldRefetch) {
@@ -286,7 +259,7 @@ const App = () => {
                 allowsBackForwardNavigationGestures={true}
                 pullToRefreshEnabled={true}
                 automaticallyAdjustContentInsets={false}
-                allowsFullscreenVideo={true}
+                allowsFullscreenVideo={false}
                 javaScriptEnabled={true}
                 domStorageEnabled={true}
                 onContentProcessDidTerminate={() => {
