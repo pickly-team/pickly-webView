@@ -12,6 +12,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import {
   Directions,
   Gesture,
@@ -209,10 +210,16 @@ const App = () => {
       setShouldRefetch(false);
     },
     onAndroidSharedEnd: clearSharedText,
+    onAppVersion: () => {
+      webviewBridge(webviewRef, 'appVersion', {
+        buildNumber: DeviceInfo.getBuildNumber(),
+        version: DeviceInfo.getVersion(),
+        platform: DeviceInfo.getSystemName(),
+      })();
+    },
   });
 
   // 2. 웹뷰 로그인
-
   useEffect(() => {
     if (shouldRefetch) {
       webviewBridge(webviewRef, 'refetch', null)();

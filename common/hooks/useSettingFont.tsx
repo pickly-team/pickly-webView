@@ -1,5 +1,5 @@
 import { useFonts } from 'expo-font';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 const useSettingFont = () => {
   const [loaded, error] = useFonts({

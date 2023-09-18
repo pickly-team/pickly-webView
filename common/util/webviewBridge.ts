@@ -17,6 +17,12 @@ interface BridgeParams {
   androidShareUrl: {
     url: string;
   };
+  /** 앱 버전 */
+  appVersion: {
+    version: string;
+    buildNumber: string;
+    platform: string;
+  };
 }
 
 export function webviewBridge<T extends keyof BridgeParams>(
