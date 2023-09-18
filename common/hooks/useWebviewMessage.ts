@@ -22,6 +22,8 @@ export interface PostBridgeParams {
   refetch: null;
   /** 안드로이드 공유 종료 */
   androidSharedEnd: null;
+  /** 앱 버전 */
+  appVersion: null;
 }
 
 interface WebviewOnMessage {
@@ -39,6 +41,7 @@ export const useWebViewMessages = (handlers: {
   onEmail?: () => void;
   onRefetch?: () => void;
   onAndroidSharedEnd?: () => void;
+  onAppVersion?: () => void;
 }) => {
   const onWebViewMessage = useCallback(
     (event: WebViewMessageEvent) => {
@@ -71,6 +74,9 @@ export const useWebViewMessages = (handlers: {
           break;
         case 'androidSharedEnd':
           handlers.onAndroidSharedEnd?.();
+          break;
+        case 'appVersion':
+          handlers.onAppVersion?.();
           break;
         default:
           break;
