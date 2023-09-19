@@ -9,5 +9,5 @@ export const useBackHandler = (handleBackAction: () => boolean) => {
     );
 
     return () => backHandler.remove();
-  }, []);
+  }, [handleBackAction]);
 };
