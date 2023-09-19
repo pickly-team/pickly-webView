@@ -5,11 +5,13 @@ import { useNavigation, useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
+  BackHandler,
   Dimensions,
   Easing,
   InteractionManager,
   StatusBar,
   StyleSheet,
+  ToastAndroid,
   View,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
@@ -75,9 +77,23 @@ const App = () => {
   }, []);
 
   // 사용자의 뒤로가기 버튼을 제거
+  const [exitApp, setExitApp] = useState(false);
+
   useBackHandler(() => {
     if (webviewRef?.current) {
-      if (currentUrl === `${clientUrl}/`) return true;
+      if (currentUrl === `${clientUrl}/`) {
+        if (!exitApp) {
+          ToastAndroid.show('한 번 더 누르면 종료됩니다.', ToastAndroid.SHORT);
+          setExitApp(true);
+          setTimeout(() => {
+            setExitApp(false);
+          }, 2000);
+          return true;
+        } else {
+          BackHandler.exitApp();
+          return false;
+        }
+      }
       setIsGoingBack(true);
       setAnimationStarted(true);
       webviewRef.current?.goBack();
@@ -107,7 +123,7 @@ const App = () => {
       webviewRef.current?.goBack();
     });
 
-  const handleNavigationStateChange = async (navState: WebViewNavigation) => {
+  const handleNavigationStateChange = (navState: WebViewNavigation) => {
     const url = navState.url;
     setCurrentUrl(url);
     if (noAnimation) return;
