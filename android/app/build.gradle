@@ -119,8 +119,8 @@ android {
         applicationId 'com.ww8007.pickly'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 8
-        versionName "1.1.0"
+        versionCode 9
+        versionName "1.1.1"
     }
     signingConfigs {
         release {
