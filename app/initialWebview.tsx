@@ -6,9 +6,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
   BackHandler,
-  Dimensions,
-  Easing,
-  InteractionManager,
   StatusBar,
   StyleSheet,
   ToastAndroid,
@@ -22,10 +19,13 @@ import {
 } from 'react-native-gesture-handler';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { WebView, WebViewNavigation } from 'react-native-webview';
+import { WebView } from 'react-native-webview';
 import { useGETMemberInfo, useGetMemberId } from '../auth/api/login';
 import useAuthContext from '../auth/useAuthContext';
+import useAppState from '../common/hooks/useAppState';
 import { useBackHandler } from '../common/hooks/useBackHandler';
+import useClipboard from '../common/hooks/useClipboard';
+import usePageAnimation, { MODE } from '../common/hooks/usePageAnimation';
 import useSharedData from '../common/hooks/useSharedData';
 import { useWebViewMessages } from '../common/hooks/useWebviewMessage';
 import webviewStore from '../common/state/webview';
@@ -35,39 +35,28 @@ import Colors from '../constants/Colors';
 import useNotification from '../notification/hooks/useNotification';
 import { navigationRef } from './_layout';
 
-export type MODE = 'SIGN_IN' | 'SIGN_UP';
-const clientUrl = Constants.expoConfig?.extra?.clientUrl || '';
-const EXPLICIT_URL = [
-  `${clientUrl}/`,
-  `${clientUrl}/friend`,
-  `${clientUrl}/notification`,
-  `${clientUrl}/profile`,
-];
-
 const webviewURL: Record<MODE, (id?: number) => string> = {
   SIGN_IN: () => '',
   SIGN_UP: (id?: number) => `/user/${id}`,
 };
 
-const windowWidth = Dimensions.get('window').width;
-
 const App = () => {
-  const [loading, setLoading] = useState(true);
-  const [isGoingBack, setIsGoingBack] = useState(false); // 뒤로 가기 상태 관리
-  const [noAnimation, setNoAnimation] = useState(false);
-  const [animationStarted, setAnimationStarted] = useState(false);
-  const [currentUrl, setCurrentUrl] = useState('');
-
-  const animationValue = useRef(new Animated.Value(windowWidth)).current;
-  const snapShotAnimationValue = useRef(new Animated.Value(0)).current;
-  const backgroundOpacityValue = useRef(new Animated.Value(1)).current;
-  const webviewOpacityValue = useRef(new Animated.Value(0)).current;
-  const [isInitialized, setIsInitialized] = useState(false);
-
-  const { user } = useAuthContext();
-  const [mode, setMode] = useState<MODE>('SIGN_UP');
+  // 페이지 전환 애니메이션
+  const {
+    clientUrl,
+    currentUrl,
+    webviewOpacityValue,
+    handleNavigationStateChange,
+    setIsGoingBack,
+    setAnimationStarted,
+    setNoAnimation,
+  } = usePageAnimation();
 
   const webviewRef = useRef<WebView>(null);
+  const { user } = useAuthContext();
+
+  const [mode, setMode] = useState<MODE>('SIGN_UP');
+  const [loading, setLoading] = useState(true);
 
   const navigator = useNavigation();
   useEffect(() => {
@@ -101,6 +90,20 @@ const App = () => {
     return true;
   });
 
+  // 클립보드에 복사된 url이 있을 경우
+  const onClickPase = (url: string) => {
+    webviewBridge(webviewRef, 'androidShareUrl', {
+      url,
+    })();
+  };
+  const { activeAppState } = useAppState();
+  const { handleOnFocus } = useClipboard({ onPaste: onClickPase });
+  useEffect(() => {
+    if (activeAppState === 'active') {
+      handleOnFocus();
+    }
+  }, [activeAppState]);
+
   // 1. 유저 로그인
   // 1.1 유저가 로그인 되어있는지 확인
   const { data: serverMemberId, isLoading: isGetMemberIdLoading } =
@@ -123,62 +126,6 @@ const App = () => {
       webviewRef.current?.goBack();
     });
 
-  const handleNavigationStateChange = (navState: WebViewNavigation) => {
-    const url = navState.url;
-    setCurrentUrl(url);
-    if (noAnimation) return;
-    if (EXPLICIT_URL.includes(url) && !isGoingBack) {
-      if (isInitialized) return;
-      requestAnimationFrame(() => {
-        Animated.timing(animationValue, {
-          toValue: 0,
-          duration: 350,
-          easing: Easing.out(Easing.poly(2)),
-          useNativeDriver: true,
-        }).start(() => {
-          setIsGoingBack(false);
-          setIsInitialized(true);
-        });
-      });
-    }
-
-    setAnimationStarted(true);
-  };
-
-  useEffect(() => {
-    if (!animationStarted) return;
-
-    snapShotAnimationValue.setValue(0);
-    animationValue.setValue(isGoingBack ? -windowWidth / 2 : windowWidth);
-    backgroundOpacityValue.setValue(1);
-    webviewOpacityValue.setValue(0);
-
-    requestAnimationFrame(() => {
-      Animated.timing(animationValue, {
-        toValue: 0,
-        duration: isGoingBack ? 350 : 350,
-        useNativeDriver: true,
-      }).start(() => {
-        setAnimationStarted(false);
-      });
-    });
-    InteractionManager.runAfterInteractions(() => {
-      setIsGoingBack(false);
-    });
-
-    Animated.timing(backgroundOpacityValue, {
-      toValue: 0,
-      duration: 350,
-      useNativeDriver: true,
-    }).start();
-
-    Animated.timing(webviewOpacityValue, {
-      toValue: 1,
-      duration: 350,
-      useNativeDriver: true,
-    }).start();
-  }, [isGoingBack, animationStarted, currentUrl]);
-
   // 3. 알림 설정
   const { requestUserPermission } = useNotification({
     memberId: userInfo?.id ?? 0,
@@ -192,7 +139,7 @@ const App = () => {
     useSharedData(String(serverMemberId) ?? '');
 
   const onWebViewMessage = useWebViewMessages({
-    onLogin: (data) => {
+    onLogin: () => {
       if (serverMemberId && user) {
         webviewBridge(webviewRef, 'login', {
           token: user.token,
@@ -235,13 +182,12 @@ const App = () => {
     },
   });
 
-  // 2. 웹뷰 로그인
+  // 5. 웹뷰 로그인
   useEffect(() => {
-    if (shouldRefetch) {
-      webviewBridge(webviewRef, 'refetch', null)();
-    }
+    if (shouldRefetch) webviewBridge(webviewRef, 'refetch', null)();
   }, [shouldRefetch, setShouldRefetch]);
 
+  // 6. 안드로이드 공유
   useEffect(() => {
     if (sharedUrl) {
       webviewBridge(webviewRef, 'androidShareUrl', {

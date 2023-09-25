@@ -2,12 +2,12 @@ require('dotenv/config');
 
 export default {
   expo: {
-    name: 'pickly',
-    slug: 'pickly',
-    version: '1.1.0',
+    name: 'Pickly',
+    slug: 'Pickly',
+    version: '1.1.1',
     orientation: 'portrait',
     icon: './assets/images/icon.png',
-    scheme: 'pickly',
+    scheme: 'Pickly',
     userInterfaceStyle: 'automatic',
     splash: {
       image: './assets/images/splash.png',
@@ -17,7 +17,7 @@ export default {
     updates: {
       url: 'https://u.expo.dev/2ff1c8d5-ce1d-47d7-86d7-ebe5d015089a',
     },
-    runtimeVersion: '1.1.0',
+    runtimeVersion: '1.1.1',
     assetBundlePatterns: ['**/*'],
     notification: {
       icon: './assets/images/notification-icon.png',

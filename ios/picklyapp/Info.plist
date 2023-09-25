@@ -15,7 +15,7 @@
     <string>itms-appss</string>
 	</array>
 	<key>CFBundleDisplayName</key>
-	<string>pickly</string>
+	<string>Pickly</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -27,7 +27,7 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.0</string>
+	<string>1.1.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -35,7 +35,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>pickly</string>
+				<string>Pickly</string>
 				<string>com.ww8007.pickly</string>
 			</array>
 		</dict>
