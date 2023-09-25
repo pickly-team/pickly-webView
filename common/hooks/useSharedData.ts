@@ -59,8 +59,8 @@ const useSharedData = (serverMemberId?: string) => {
   };
 
   const setSharedMemberId = (id: string) => {
-    if (ShareModule && ShareModule.setSharedData) {
-      ShareModule.setSharedData(id);
+    if (ShareModule && ShareModule.setMemberId) {
+      ShareModule.setMemberId(id);
     }
   };
 
