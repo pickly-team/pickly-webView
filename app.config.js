@@ -4,7 +4,7 @@ export default {
   expo: {
     name: 'Pickly',
     slug: 'pickly',
-    version: '1.1.2',
+    version: '1.1.3',
     orientation: 'portrait',
     icon: './assets/images/icon.png',
     scheme: 'picklyapp',
