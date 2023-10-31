@@ -13,7 +13,8 @@
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
 		667EE6943D96445B9CCDE2D7 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = D310EEBAD3154E738A432857 /* noop-file.swift */; };
 		A214E8C22A9300FC00133C54 /* RCTShareModule.m in Sources */ = {isa = PBXBuildFile; fileRef = A214E8C12A9300FC00133C54 /* RCTShareModule.m */; };
-		A2206EE02A6AACD2009A0705 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A2206EDF2A6AACD2009A0705 /* GoogleService-Info.plist */; };
+		A28A78662AE798810020E4A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A28A78652AE798810020E4A2 /* GoogleService-Info.plist */; };
+		A28A78672AE798810020E4A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A28A78652AE798810020E4A2 /* GoogleService-Info.plist */; };
 		A2B7EC592A94582900CF0533 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7EC582A94582900CF0533 /* ShareViewController.swift */; };
 		A2B7EC5C2A94582900CF0533 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2B7EC5A2A94582900CF0533 /* MainInterface.storyboard */; };
 		A2B7EC602A94582900CF0533 /* ShareIntent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A2B7EC562A94582900CF0533 /* ShareIntent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -63,7 +64,7 @@
 		A0CD12526FE08FAB990BCA5D /* Pods_picklyapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_picklyapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A214E8C12A9300FC00133C54 /* RCTShareModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTShareModule.m; sourceTree = "<group>"; };
 		A214E8C32A93010800133C54 /* RCTShareModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTShareModule.h; sourceTree = "<group>"; };
-		A2206EDF2A6AACD2009A0705 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A28A78652AE798810020E4A2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A2B7EC562A94582900CF0533 /* ShareIntent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareIntent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2B7EC582A94582900CF0533 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		A2B7EC5B2A94582900CF0533 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -136,7 +137,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				A2206EDF2A6AACD2009A0705 /* GoogleService-Info.plist */,
+				A28A78652AE798810020E4A2 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* picklyapp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				A2B7EC572A94582900CF0533 /* ShareIntent */,
@@ -296,8 +297,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A28A78662AE798810020E4A2 /* GoogleService-Info.plist in Resources */,
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
-				A2206EE02A6AACD2009A0705 /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
 			);
@@ -307,6 +308,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A28A78672AE798810020E4A2 /* GoogleService-Info.plist in Resources */,
 				A2B7EC5C2A94582900CF0533 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -389,12 +391,14 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-picklyapp/Pods-picklyapp-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/EXUpdates/EXUpdates.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/GoogleSignIn/GoogleSignIn.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXUpdates.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
@@ -489,7 +493,7 @@
 				INFOPLIST_FILE = picklyapp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -523,7 +527,7 @@
 				INFOPLIST_FILE = picklyapp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -581,6 +585,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -594,6 +599,10 @@
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 			};
@@ -634,6 +643,10 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION,
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -644,6 +657,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

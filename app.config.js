@@ -3,11 +3,11 @@ require('dotenv/config');
 export default {
   expo: {
     name: 'Pickly',
-    slug: 'Pickly',
-    version: '1.1.1',
+    slug: 'pickly',
+    version: '1.1.2',
     orientation: 'portrait',
     icon: './assets/images/icon.png',
-    scheme: 'Pickly',
+    scheme: 'picklyapp',
     userInterfaceStyle: 'automatic',
     splash: {
       image: './assets/images/splash.png',
@@ -23,16 +23,10 @@ export default {
       icon: './assets/images/notification-icon.png',
     },
     ios: {
-      googleServicesFile: process.env.IOS_INFO_PLIST,
-      supportsTablet: true,
       bundleIdentifier: 'com.ww8007.pickly',
       buildNumber: '12',
-      infoPlist: {
-        UIBackgroundModes: ['remote-notification'],
-      },
     },
     android: {
-      googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
       package: 'com.ww8007.pickly',
       adaptiveIcon: {
         foregroundImage: './assets/images/adaptive-icon.png',
