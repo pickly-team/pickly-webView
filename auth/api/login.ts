@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Constants from 'expo-constants';
-import { MODE } from '../../app/initialWebview';
+import { MODE } from '../../common/hooks/usePageAnimation';
 import client from '../../lib/client';
 export interface Json {
   email: string;
