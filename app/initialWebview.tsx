@@ -55,7 +55,7 @@ const App = () => {
   const webviewRef = useRef<WebView>(null);
   const { user } = useAuthContext();
 
-  const [mode, setMode] = useState<MODE>('SIGN_UP');
+  const [mode, setMode] = useState<MODE>('SIGN_IN');
   const [loading, setLoading] = useState(true);
 
   const navigator = useNavigation();
