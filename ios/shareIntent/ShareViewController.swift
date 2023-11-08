@@ -13,6 +13,7 @@ struct POSTBookmarkRequest: Encodable {
     let categoryId: Int
     let url: String
     let title: String
+    let thumbnail: String
     let visibility: Visibility
 }
 
@@ -52,6 +53,12 @@ class ShareViewController: UIViewController {
         label.text = "제목"
         label.textColor = .white
         return label
+    }()
+  
+    let thumbnailValueLabel: UILabel = {
+      let label = UILabel()
+      label.textColor = .gray
+      return label
     }()
     
     let titleTextField: UITextField = {
@@ -152,7 +159,7 @@ class ShareViewController: UIViewController {
     @objc func sendAction() {
       let sharedDefaults = UserDefaults(suiteName: "group.com.ww8007.pickly")
       guard let memberId = sharedDefaults?.integer(forKey: "memberId") else { return }
-      let bookmarkRequest = POSTBookmarkRequest(memberId: memberId, categoryId: self.selectedCategoryId ?? 0, url: self.urlValueLabel.text ?? "", title: self.titleTextField.text ?? "", visibility: self.selectedVisibility ?? .scopePublic)
+      let bookmarkRequest = POSTBookmarkRequest(memberId: memberId, categoryId: self.selectedCategoryId ?? 0,   url: self.urlValueLabel.text ?? "", title: self.titleTextField.text ?? "", thumbnail: self.thumbnailValueLabel.text ?? "", visibility: self.selectedVisibility ?? .scopePublic)
       print(bookmarkRequest)
         postBookmark(params: bookmarkRequest)
     }
@@ -275,9 +282,9 @@ class ShareViewController: UIViewController {
   
     func getBookmarkTitle() {
         let sharedDefaults = UserDefaults(suiteName: "group.com.ww8007.pickly")
-        let memberId = (sharedDefaults?.integer(forKey: "memberId") == 0) ? 112 : sharedDefaults?.integer(forKey: "memberId") ?? 112
+        
 
-        guard let url = URL(string: "https://api.pickly.today/api/members/\(memberId)/bookmark/title") else {
+        guard let url = URL(string: "https://api.pickly.today/api/members/bookmark/info") else {
             print("Invalid URL")
             return
         }
@@ -285,42 +292,42 @@ class ShareViewController: UIViewController {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "GET"
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let parameters: [String: String] = ["memberId": "\(memberId)", "url": self.urlValueLabel.text ?? ""]
+        let parameters: [String: String] = ["url": self.urlValueLabel.text ?? ""]
 
 
         urlRequest.url = URL(string: url.absoluteString + "?" + parameters.queryString)
 
-        let task = URLSession.shared.dataTask(with: urlRequest) { [weak self] (data, response, error) in
-            // Check for URLSession errors
-            if let error = error {
-                print("Data task error: \(error)")
-                self?.showErrorAlert()
-                return
-            }
-
-            // Check for HTTP errors
-            if let httpResponse = response as? HTTPURLResponse, (400...499).contains(httpResponse.statusCode) {
-                print("HTTP error with status code: \(httpResponse.statusCode)")
-                self?.showErrorAlert()
-                return
-            }
-
-            // Check for invalid or empty data
-            guard let data = data, !data.isEmpty else {
-                print("Invalid or empty data")
-                self?.showErrorAlert()
-                return
-            }
-
-            if let title = String(data: data, encoding: .utf8) {
-                DispatchQueue.main.async {
-                    self?.titleTextField.text = title
-                }
-            } else {
-                print("Unable to decode title")
-            }
+      let task = URLSession.shared.dataTask(with: urlRequest) { [weak self] (data, response, error) in
+        // Check for URLSession errors
+        if let error = error {
+          print("Data task error: \(error)")
+          self?.showErrorAlert()
+          return
         }
-
+        
+        
+        // Check for invalid or empty data
+        guard let data = data, !data.isEmpty else {
+          print("Invalid or empty data")
+          return
+        }
+        
+        // Parse JSON data
+        do {
+          if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String],
+             let title = json["title"],
+             let thumbnail = json["thumbnail"] {
+            DispatchQueue.main.async {
+              self?.titleTextField.text = title
+              self?.thumbnailValueLabel.text = thumbnail
+            }
+          } else {
+            print("Unable to decode title or thumbnail")
+          }
+        } catch {
+          print("JSON error: \(error.localizedDescription)")
+        }
+      }
 
         task.resume()
     }
@@ -411,57 +418,58 @@ class ShareViewController: UIViewController {
   }
   
 
-  func postBookmark(params: POSTBookmarkRequest) {
-      let sharedDefaults = UserDefaults(suiteName: "group.com.ww8007.pickly")
-
-      guard let url = URL(string: "https://api.pickly.today/api/bookmarks") else {
+      func postBookmark(params: POSTBookmarkRequest) {
+        let sharedDefaults = UserDefaults(suiteName: "group.com.ww8007.pickly")
+        
+        guard let url = URL(string: "https://api.pickly.today/api/bookmarks") else {
           print("Invalid URL")
           return
-      }
-      
-      var request = URLRequest(url: url)
-      request.httpMethod = "POST"
-      request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-      
-      do {
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        do {
           request.httpBody = try JSONEncoder().encode(params)
-      } catch {
+        } catch {
           print("Encoding error: \(error)")
           return
-      }
-
-      let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        }
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
           if let error = error {
-              print("Data task error: \(error)")
-              return
+            print("Data task error: \(error)")
+            return
           }
           
           guard let data = data else {
-              print("Invalid data")
-              return
+            print("Invalid data")
+            return
           }
           
           do {
-              let decodedResponse = try JSONDecoder().decode(POSTBookmarkResponse.self, from: data)
-              // 이 부분에서 성공적으로 북마크가 생성된 후의 작업을 수행할 수 있습니다.
-              print("Created Bookmark ID:", decodedResponse.id)
-              sharedDefaults?.set("refetch", forKey: "sharedData")
-              sharedDefaults?.synchronize()
-              self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+            let decodedResponse = try JSONDecoder().decode(POSTBookmarkResponse.self, from: data)
+            // 이 부분에서 성공적으로 북마크가 생성된 후의 작업을 수행할 수 있습니다.
+            print("Created Bookmark ID:", decodedResponse.id)
+            sharedDefaults?.set("refetch", forKey: "sharedData")
+            sharedDefaults?.synchronize()
+            self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
           } catch {
-              // 북마크를 추가할 수 없는 경우
-              DispatchQueue.main.async {
-                  print("Decoding error: \(error)")
-                  let alert = UIAlertController(title: "알림", message: "앗! 추가할 수 없는 북마크에요", preferredStyle: .alert)
-                  alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
-                      self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
-                  }))
-
-                  // 이 부분을 추가하여 알림을 표시합니다.
-                  self.present(alert, animated: true, completion: nil)
-              }
+            // 북마크를 추가할 수 없는 경우
+            DispatchQueue.main.async {
+              print("Decoding error: \(error)")
+              let alert = UIAlertController(title: "알림", message: "앗! 추가할 수 없는 북마크에요", preferredStyle: .alert)
+              alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+              }))
+              
+              // 이 부분을 추가하여 알림을 표시합니다.
+              self.present(alert, animated: true, completion: nil)
+            }
           }
-      }
+        }
+      
       
       task.resume()
   }
