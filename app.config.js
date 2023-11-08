@@ -33,10 +33,6 @@ export default {
         backgroundColor: '#ffffff',
       },
     },
-    web: {
-      bundler: 'metro',
-      favicon: './assets/images/favicon.png',
-    },
     extra: {
       eas: {
         projectId: '2ff1c8d5-ce1d-47d7-86d7-ebe5d015089a',
