@@ -6,9 +6,15 @@ import { View } from '../../components/Themed';
 
 interface Props {
   withPassword?: boolean;
+  onKeyFocus: () => void;
+  onKeyBlur: () => void;
 }
 
-const EmailAndPassword = ({ withPassword = true }: Props) => {
+const EmailAndPassword = ({
+  withPassword = true,
+  onKeyFocus,
+  onKeyBlur,
+}: Props) => {
   const { email, password, setEmail, setPassword } = useEmailStore();
   return (
     <View style={styles.inputWrapper}>
@@ -18,7 +24,9 @@ const EmailAndPassword = ({ withPassword = true }: Props) => {
         placeholder="이메일"
         autoCapitalize="none"
         keyboardType="email-address"
-        style={{ width: '90%' }}
+        style={styles.textInput}
+        onFocus={onKeyFocus}
+        onBlur={onKeyBlur}
       />
       {!!withPassword && (
         <TextInput
@@ -26,7 +34,9 @@ const EmailAndPassword = ({ withPassword = true }: Props) => {
           onChangeText={setPassword}
           placeholder="비밀번호"
           secureTextEntry
-          style={{ width: '90%' }}
+          style={styles.textInput}
+          onFocus={onKeyFocus}
+          onBlur={onKeyBlur}
         />
       )}
     </View>
@@ -41,5 +51,8 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  textInput: {
+    width: '90%',
   },
 });

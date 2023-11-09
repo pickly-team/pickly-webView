@@ -16,6 +16,7 @@ import useSignInUser from '../../auth/useSignInUser';
 import useEmailStore from '../../common/state/email';
 import webviewStore from '../../common/state/webview';
 import BottomFixedButton from '../../common/ui/BottomFixedButton';
+import FullPageLoading from '../../common/ui/FullPageLoading';
 import Header from '../../common/ui/Header';
 import { Text } from '../../components/Themed';
 import Colors from '../../constants/Colors';
@@ -25,6 +26,11 @@ const login = () => {
 
   const { setMode } = webviewStore();
   const { email, password, initialize } = useEmailStore();
+
+  const [isKeyboardFocus, setIsKeyboardFocus] = React.useState(false);
+
+  const keyboardDidShow = () => setIsKeyboardFocus(true);
+  const keyboardDidHide = () => setIsKeyboardFocus(false);
 
   const onPressRegister = () => {
     router.push('/email/register');
@@ -36,7 +42,7 @@ const login = () => {
     setMode('REGISTER');
   };
 
-  const { signInUser } = useSignInUser();
+  const { signInUser, isLoading } = useSignInUser();
 
   const onPressLogin = () => {
     if (!email) {
@@ -76,13 +82,21 @@ const login = () => {
 
   return (
     <>
-      <StatusBar barStyle="light-content" />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={Colors.dark.background}
+      />
       <SafeAreaView style={styles.safeArea}>
+        {!!isLoading && <FullPageLoading />}
+        <Header
+          showBackButton
+          backButtonCallback={onClickBackButton}
+          top={Platform.OS === 'ios' ? -20 : 0}
+        />
         <KeyboardAvoidingView
           style={styles.container}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
-          <Header showBackButton backButtonCallback={onClickBackButton} />
           <View style={styles.imageWrapper}>
             <Image
               source={require('../../assets/images/icon.png')}
@@ -90,7 +104,10 @@ const login = () => {
             />
           </View>
           <View style={styles.inputWrapper}>
-            <EmailAndPassword />
+            <EmailAndPassword
+              onKeyFocus={keyboardDidShow}
+              onKeyBlur={keyboardDidHide}
+            />
             <View style={styles.registerTextWrapper}>
               <Text onPress={onPressRegister} style={styles.registerText}>
                 회원가입 하기
@@ -102,11 +119,13 @@ const login = () => {
               </Text>
             </View>
           </View>
-          <BottomFixedButton onPress={onPressLogin}>
-            <Text style={{ fontFamily: 'NanumSquareBold', fontSize: 16 }}>
-              로그인
-            </Text>
-          </BottomFixedButton>
+          {!isKeyboardFocus && (
+            <BottomFixedButton onPress={onPressLogin}>
+              <Text style={{ fontFamily: 'NanumSquareBold', fontSize: 16 }}>
+                로그인
+              </Text>
+            </BottomFixedButton>
+          )}
         </KeyboardAvoidingView>
       </SafeAreaView>
     </>
@@ -122,6 +141,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    backgroundColor: Colors.dark.background,
   },
   imageWrapper: {
     flex: 1,
