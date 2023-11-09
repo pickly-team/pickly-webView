@@ -8,14 +8,15 @@ import { Image, Platform, StyleSheet } from 'react-native';
 import useGetAppleAuth from '../auth/useGetAppleAuth';
 import useGetGoogleAuth from '../auth/useGetGoogleAuth';
 import Button from '../common/ui/Button';
+import FullPageLoading from '../common/ui/FullPageLoading';
 import GoggleLogo from '../common/ui/GoggleLogo';
 import { Text } from '../common/ui/Text';
 import { View } from '../components/Themed';
 import Colors from '../constants/Colors';
 
 export default function ModalScreen() {
-  const { onClickGoogleLogin } = useGetGoogleAuth();
-  const { signInWithApple } = useGetAppleAuth();
+  const { onClickGoogleLogin, isLoading: isGoogleLoading } = useGetGoogleAuth();
+  const { signInWithApple, isLoading: isAppleLoading } = useGetAppleAuth();
   const router = useRouter();
 
   const onClickEmailLogin = () => {
@@ -24,6 +25,7 @@ export default function ModalScreen() {
 
   return (
     <View style={styles.container}>
+      {isGoogleLoading || isAppleLoading ? <FullPageLoading /> : null}
       <View style={styles.imageWrapper}>
         <Image
           source={require('../assets/images/icon.png')}

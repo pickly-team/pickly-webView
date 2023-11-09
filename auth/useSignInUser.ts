@@ -1,10 +1,10 @@
-import { useGetMemberId, useUserSignIn } from './api/login';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
+import { useGetMemberId, useUserSignIn } from './api/login';
 
 const useSignInUser = () => {
   const [token, setToken] = useState<string>('');
-  const { mutate: userSignIn, isSuccess } = useUserSignIn();
+  const { mutate: userSignIn, isSuccess, isLoading } = useUserSignIn();
   const router = useRouter();
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const useSignInUser = () => {
     setToken(token);
   };
 
-  return { signInUser };
+  return { signInUser, isLoading };
 };
 
 export default useSignInUser;
