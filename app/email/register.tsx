@@ -1,5 +1,5 @@
 import auth from '@react-native-firebase/auth';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   Image,
@@ -15,6 +15,7 @@ import useSignInUser from '../../auth/useSignInUser';
 import useEmailStore from '../../common/state/email';
 import webviewStore from '../../common/state/webview';
 import BottomFixedButton from '../../common/ui/BottomFixedButton';
+import FullPageLoading from '../../common/ui/FullPageLoading';
 import Header from '../../common/ui/Header';
 import { Text } from '../../components/Themed';
 import Colors from '../../constants/Colors';
@@ -23,7 +24,12 @@ const register = () => {
   const { email, password } = useEmailStore();
   const { setMode } = webviewStore();
 
-  const { signInUser } = useSignInUser();
+  const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
+
+  const keyboardDidShow = () => setIsKeyboardFocus(true);
+  const keyboardDidHide = () => setIsKeyboardFocus(false);
+
+  const { signInUser, isLoading } = useSignInUser();
 
   const onPressRegister = () => {
     if (!email) {
@@ -57,29 +63,40 @@ const register = () => {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="light-content" />
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
-        <Header showBackButton />
-        <View style={styles.imageWrapper}>
-          <Image
-            source={require('../../assets/images/icon.png')}
-            style={{ width: 200, height: 200, borderRadius: 10 }}
-          />
-        </View>
-        <View style={styles.inputWrapper}>
-          <EmailAndPassword />
-        </View>
-        <BottomFixedButton onPress={onPressRegister}>
-          <Text style={{ fontFamily: 'NanumSquareBold', fontSize: 16 }}>
-            회원가입
-          </Text>
-        </BottomFixedButton>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+    <>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={Colors.dark.background}
+      />
+      <SafeAreaView style={styles.safeArea}>
+        {!!isLoading && <FullPageLoading />}
+        <Header showBackButton top={Platform.OS === 'ios' ? -20 : 0} />
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          <View style={styles.imageWrapper}>
+            <Image
+              source={require('../../assets/images/icon.png')}
+              style={{ width: 200, height: 200, borderRadius: 10 }}
+            />
+          </View>
+          <View style={styles.inputWrapper}>
+            <EmailAndPassword
+              onKeyFocus={keyboardDidShow}
+              onKeyBlur={keyboardDidHide}
+            />
+          </View>
+          {!isKeyboardFocus && (
+            <BottomFixedButton onPress={onPressRegister}>
+              <Text style={{ fontFamily: 'NanumSquareBold', fontSize: 16 }}>
+                회원가입
+              </Text>
+            </BottomFixedButton>
+          )}
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </>
   );
 };
 

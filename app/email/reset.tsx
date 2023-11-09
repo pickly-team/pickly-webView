@@ -10,6 +10,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import EmailAndPassword from '../../auth/ui/EmailAndPassword';
 import useEmailStore from '../../common/state/email';
 import webviewStore from '../../common/state/webview';
@@ -17,13 +18,17 @@ import BottomFixedButton from '../../common/ui/BottomFixedButton';
 import Header from '../../common/ui/Header';
 import { Text } from '../../components/Themed';
 import Colors from '../../constants/Colors';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const reset = () => {
   const router = useRouter();
 
   const { setMode } = webviewStore();
   const { email } = useEmailStore();
+
+  const [isKeyboardFocus, setIsKeyboardFocus] = React.useState(false);
+
+  const keyboardDidShow = () => setIsKeyboardFocus(true);
+  const keyboardDidHide = () => setIsKeyboardFocus(false);
 
   const onPressLogin = () => {
     if (!email) {
@@ -32,7 +37,7 @@ const reset = () => {
     }
     auth()
       .sendPasswordResetEmail(email)
-      .then((res) => {
+      .then(() => {
         Alert.alert('이메일이 전송되었습니다.');
         router.push('/email/login');
         setMode('REGISTER');
@@ -50,13 +55,16 @@ const reset = () => {
 
   return (
     <>
-      <StatusBar barStyle="light-content" />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={Colors.dark.background}
+      />
       <SafeAreaView style={styles.safeArea}>
+        <Header showBackButton top={Platform.OS === 'ios' ? -20 : 0} />
         <KeyboardAvoidingView
           style={styles.container}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
-          <Header showBackButton />
           <View style={styles.imageWrapper}>
             <Image
               source={require('../../assets/images/icon.png')}
@@ -64,13 +72,19 @@ const reset = () => {
             />
           </View>
           <View style={styles.inputWrapper}>
-            <EmailAndPassword withPassword={false} />
+            <EmailAndPassword
+              withPassword={false}
+              onKeyFocus={keyboardDidShow}
+              onKeyBlur={keyboardDidHide}
+            />
           </View>
-          <BottomFixedButton onPress={onPressLogin}>
-            <Text style={{ fontFamily: 'NanumSquareBold', fontSize: 16 }}>
-              재설정 이메일 보내기
-            </Text>
-          </BottomFixedButton>
+          {!isKeyboardFocus && (
+            <BottomFixedButton onPress={onPressLogin}>
+              <Text style={{ fontFamily: 'NanumSquareBold', fontSize: 16 }}>
+                재설정 이메일 보내기
+              </Text>
+            </BottomFixedButton>
+          )}
         </KeyboardAvoidingView>
       </SafeAreaView>
     </>

@@ -10,6 +10,7 @@ interface HeaderProps {
   title?: string;
   rightButton?: ReactNode;
   backButtonCallback?: () => void;
+  top?: number;
 }
 
 const Header = ({
@@ -17,6 +18,7 @@ const Header = ({
   title,
   rightButton,
   backButtonCallback,
+  top = 0,
 }: HeaderProps) => {
   const router = useRouter();
 
@@ -25,7 +27,14 @@ const Header = ({
     backButtonCallback && backButtonCallback();
   };
   return (
-    <View style={styles.headerContainer}>
+    <View
+      style={[
+        styles.headerContainer,
+        {
+          top,
+        },
+      ]}
+    >
       <View style={styles.backButtonAndTitleWrapper}>
         {showBackButton && (
           <MaterialIcons
