@@ -8,7 +8,7 @@ GoogleSignin.configure({
 });
 
 const useGetGoogleAuth = () => {
-  const { signInUser } = useSignInUser();
+  const { signInUser, isLoading } = useSignInUser();
 
   const onClickGoogleLogin = async () => {
     // Check if your device supports Google Play
@@ -32,7 +32,7 @@ const useGetGoogleAuth = () => {
       });
   };
 
-  return { onClickGoogleLogin };
+  return { onClickGoogleLogin, isLoading };
 };
 
 export default useGetGoogleAuth;

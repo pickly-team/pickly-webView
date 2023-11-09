@@ -5,7 +5,7 @@ import useUserStore from '../common/state/user';
 import useSignInUser from './useSignInUser';
 
 const useGetAppleAuth = () => {
-  const { signInUser } = useSignInUser();
+  const { signInUser, isLoading } = useSignInUser();
   const { setName } = useUserStore();
 
   const signInWithApple = async () => {
@@ -44,7 +44,7 @@ const useGetAppleAuth = () => {
       });
   };
 
-  return { signInWithApple };
+  return { signInWithApple, isLoading };
 };
 
 export default useGetAppleAuth;
