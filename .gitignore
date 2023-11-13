@@ -85,6 +85,13 @@ dist/
 
 # @end expo-cli
 
+# eas local
+
+credentials.json
+pickly-bb15d-98514c6b7d8f.json
+
+*.aab
+
 .easignore
 
 ### EASINCLUDE! ###
