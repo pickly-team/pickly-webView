@@ -284,7 +284,7 @@ class ShareViewController: UIViewController {
         let sharedDefaults = UserDefaults(suiteName: "group.com.ww8007.pickly")
         
 
-        guard let url = URL(string: "https://api.pickly.today/api/members/bookmark/info") else {
+        guard let url = URL(string: "https://pickly-service.fly.dev/api/members/bookmark/info") else {
             print("Invalid URL")
             return
         }
@@ -373,7 +373,7 @@ class ShareViewController: UIViewController {
       let sharedDefaults = UserDefaults(suiteName: "group.com.ww8007.pickly")
       guard let memberId = sharedDefaults?.integer(forKey: "memberId") else { return }
 
-      guard let url = URL(string: "https://api.pickly.today/api/members/\(memberId)/categories") else {
+      guard let url = URL(string: "https://pickly-service.fly.dev/api/members/\(memberId)/categories") else {
           print("Invalid URL")
           return
       }
@@ -421,7 +421,7 @@ class ShareViewController: UIViewController {
       func postBookmark(params: POSTBookmarkRequest) {
         let sharedDefaults = UserDefaults(suiteName: "group.com.ww8007.pickly")
         
-        guard let url = URL(string: "https://api.pickly.today/api/bookmarks") else {
+        guard let url = URL(string: "https://pickly-service.fly.dev/api/bookmarks") else {
           print("Invalid URL")
           return
         }
