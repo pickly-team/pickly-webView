@@ -4,7 +4,7 @@ export default {
   expo: {
     name: 'Pickly',
     slug: 'pickly',
-    version: '1.1.3',
+    version: '1.1.4',
     orientation: 'portrait',
     icon: './assets/images/icon.png',
     scheme: 'picklyapp',
@@ -17,7 +17,7 @@ export default {
     updates: {
       url: 'https://u.expo.dev/2ff1c8d5-ce1d-47d7-86d7-ebe5d015089a',
     },
-    runtimeVersion: '1.1.3',
+    runtimeVersion: '1.1.4',
     assetBundlePatterns: ['**/*'],
     notification: {
       icon: './assets/images/notification-icon.png',
